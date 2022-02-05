@@ -5,7 +5,7 @@ export const Home: React.FC = () => {
   return (
     <div className="myhome bg-[#141414] text-gray-700">
       <Navbar />
-      <Featured />
+      <Featured type="movie" />
     </div>
   );
 };
