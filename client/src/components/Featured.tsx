@@ -7,7 +7,7 @@ type FeaturedProps = {
 
 export default function Featured({ type }: FeaturedProps) {
   return (
-    <div className="featured h-[90vh] border-2 border-red-500 relative">
+    <div className="featured h-[90vh] relative">
       {type && (
         <div className="category absolute top-20 left-12 text-3xl font-medium text-white flex items-center ">
           <span>{type === "movie" ? "Movies" : "Series"}</span>

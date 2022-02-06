@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .slider-arrow {
+    @apply w-12 h-full;
+  }
+}

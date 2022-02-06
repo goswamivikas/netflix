@@ -4,8 +4,8 @@ import React from "react";
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = React.useState<boolean>(false);
 
-  console.log(window.pageYOffset);
-  console.log(isScrolled);
+  // console.log(window.pageYOffset);
+  // console.log(isScrolled);
   window.onscroll = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true);
     return () => (window.onscroll = null);
