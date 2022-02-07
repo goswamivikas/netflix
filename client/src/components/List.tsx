@@ -30,7 +30,7 @@ function List() {
 
   return (
     <div className="list mt-2 ">
-      <span className="listTitle text-white text-xl font-medium ml-12">
+      <span className="listTitle ml-12 text-xl font-medium text-white">
         Continue to watch
       </span>
       <div className="wrapper relative">
@@ -38,30 +38,30 @@ function List() {
           <ArrowBackIosOutlined
             onClick={() => handleClick("left")}
             style={{ width: "48px", height: "100%" }}
-            className="bg-[rgb(22,22,22,0.2)]  text-white z-50 absolute left-0 cursor-pointer"
+            className="absolute  left-0 z-50 cursor-pointer bg-[rgb(22,22,22,0.2)] text-white"
           />
         )}
         <div
           ref={listRef}
           className="containerss ml-12 flex w-max transition-all duration-1000 ease-in-out"
         >
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
+          <ListItem index={0} />
+          <ListItem index={1} />
+          <ListItem index={2} />
+          <ListItem index={3} />
+          <ListItem index={4} />
+          <ListItem index={5} />
+          <ListItem index={6} />
+          <ListItem index={7} />
+          <ListItem index={8} />
+          <ListItem index={9} />
+          <ListItem index={10} />
+          <ListItem index={11} />
         </div>
         <ArrowForwardIosOutlined
           onClick={() => handleClick("right")}
           style={{ width: "48px", height: "100%" }}
-          className="bg-[rgb(22,22,22,0.2)] text-white z-50 absolute right-0 top-0 bottom-0 cursor-pointer"
+          className="absolute right-0 top-0 bottom-0 z-50 cursor-pointer bg-[rgb(22,22,22,0.2)] text-white"
         />
       </div>
     </div>

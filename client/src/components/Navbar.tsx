@@ -15,10 +15,10 @@ const Navbar = () => {
 
   return (
     <div
-      className={`mynavbar text-white text-sm fixed w-full top-0 z-50 ${gradient}`}
+      className={`mynavbar fixed top-0 z-50 w-full text-sm text-white ${gradient}`}
     >
-      <div className="mycontainer px-12 flex flex-row items-center justify-between h-16">
-        <div className="myleft flex items-center children:cursor-pointer children:mr-4">
+      <div className="mycontainer flex h-16 flex-row items-center justify-between px-12">
+        <div className="myleft flex items-center children:mr-4 children:cursor-pointer">
           <img
             className="h-6"
             src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg"
@@ -35,13 +35,13 @@ const Navbar = () => {
           <span className="">KID</span>
           <Notifications />
           <img
-            className="h-8 w-8 rounded object-cover cursor-pointer"
+            className="h-8 w-8 cursor-pointer rounded object-cover"
             src="https://i.imgur.com/WM6zTNc.png"
             alt="profile_image"
           />
-          <div className="profile bg-black rounded children:hover:flex children:hover:flex-col">
+          <div className="profile rounded bg-black children:hover:flex children:hover:flex-col">
             <ArrowDropDown />
-            <div className="options hidden absolute bg-black children:p-2.5 children:cursor-pointer">
+            <div className="options absolute hidden bg-black children:cursor-pointer children:p-2.5">
               <span>Settings</span>
               <span>Logout</span>
             </div>

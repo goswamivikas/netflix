@@ -4,6 +4,6 @@
 
 @layer components {
   .slider-arrow {
-    @apply w-12 h-full;
+    @apply h-full w-12;
   }
 }
