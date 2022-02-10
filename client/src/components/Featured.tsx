@@ -2,7 +2,7 @@ import { InfoOutlined, PlayArrow } from "@material-ui/icons";
 import React from "react";
 
 type FeaturedProps = {
-  type: string;
+  type?: string;
 };
 
 export default function Featured({ type }: FeaturedProps) {
@@ -10,7 +10,7 @@ export default function Featured({ type }: FeaturedProps) {
     <div className="featured relative h-[90vh]">
       {type && (
         <div className="category absolute top-20 left-12 flex items-center text-3xl font-medium text-white ">
-          <span>{type === "movie" ? "Movies" : "Series"}</span>
+          <span>{type === "movies" ? "Movies" : "Series"}</span>
           <select
             className="m-5 cursor-pointer border border-white bg-black p-1"
             name="genre"
