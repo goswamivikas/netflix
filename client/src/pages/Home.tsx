@@ -8,8 +8,16 @@ type propsTypes = {
   type?: string;
 };
 
+export interface ListInterface {
+  _id: string;
+  title: string;
+  mediaType: string;
+  genre: string;
+  content: number[];
+}
+
 export const Home = ({ type }: propsTypes) => {
-  const [lists, setLists] = useState<Array<any>>([]);
+  const [lists, setLists] = useState<Array<ListInterface>>([]);
   const [genre, setGenre] = useState<string>("");
   useEffect(() => {
     const getRandomLists = async () => {
@@ -37,7 +45,7 @@ export const Home = ({ type }: propsTypes) => {
       <Navbar />
       <Featured type={type} />
       {lists?.map((list) => (
-        <List list={list} />
+        <List list={list} key={list._id} />
       ))}
     </div>
   );
