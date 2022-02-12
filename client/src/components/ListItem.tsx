@@ -53,7 +53,7 @@ function ListItem({
       style={{ left: isHovered ? index * 240 - 72 + index * 2.5 : "" }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="listItem bg-netflix-black group z-99 mr-1 h-32 w-60 cursor-pointer overflow-auto hover:absolute hover:-top-40 hover:h-96 hover:w-96 hover:rounded-md hover:shadow-md hover:shadow-[rgba(255,255,255,0.07)]"
+      className="listItem bg-netflix-black group z-99 mr-1 h-32 w-60 cursor-pointer overflow-hidden hover:absolute hover:-top-40 hover:h-96 hover:w-96 hover:rounded-md hover:shadow-md hover:shadow-[rgba(255,255,255,0.07)]"
     >
       <img
         className="h-full w-full  group-hover:h-[216px]"
@@ -64,24 +64,40 @@ function ListItem({
         <>
           <Preview id={id} type={type} />
           <div className="itemInfo z-[999] flex flex-col overflow-visible p-2">
-            <div className="icons mb-2 flex">
-              <PlayArrow className="mr-2 rounded-full border-2 border-white p-1 text-base text-white" />
-              <Add className="mr-2 rounded-full border-2 border-white p-1 text-base text-white" />
-              <ThumbUpAltOutlined className="mr-2 rounded-full border-2 border-white p-1 text-base text-white" />
-              <ThumbDownAltOutlined className="mr-2 rounded-full border-2 border-white p-1 text-base text-white" />
+            <div className="icons mb-3 flex">
+              <PlayArrow
+                fontSize="large"
+                className="mr-2 rounded-full border-2 border-white p-1 text-base text-white"
+              />
+              <Add
+                fontSize="large"
+                className="mr-2 rounded-full border-2 border-white p-1 text-base text-white"
+              />
+              <ThumbUpAltOutlined
+                fontSize="large"
+                className="mr-2 rounded-full border-2 border-white p-1 text-base text-white"
+              />
+              <ThumbDownAltOutlined
+                fontSize="large"
+                className="mr-2 rounded-full border-2 border-white p-1 text-base text-white"
+              />
             </div>
             <div className="iteminfoTop mb-2 flex items-center text-sm font-semibold text-gray-400">
-              <span>1 hour 14 mins</span>
-              <span className="limit mx-2 border border-gray-400 py-0.5 px-1">
-                +16
+              <span className="pr-1 leading-none text-green-500">
+                100% Match
               </span>
-              <span>1999</span>
+              <span>{item?.runtime} minutes</span>
+              <span className="limit mx-2 border border-gray-400 py-0.5 px-1">
+                {item?.adult ? "+18" : "+14"}
+              </span>
+              <span>{item?.release_date}</span>
             </div>
-            <div className="desc text-sm text-gray-300">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus
-              doloremque voluptatum commodi iste eveniet repellat?
+            <div className="desc overflow-ellipsis text-sm text-gray-300">
+              {item?.tagline}
             </div>
-            <div className="genre text-base text-gray-300">Action</div>
+            <div className="genre my-3 text-base text-gray-300">
+              Action &middot; This &middot; That
+            </div>
           </div>
         </>
       )}

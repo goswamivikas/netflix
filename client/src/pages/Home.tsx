@@ -47,6 +47,7 @@ export const Home = ({ type }: propsTypes) => {
       {lists?.map((list, index) =>
         index === 2 ? <List list={list} key={list._id} type={type} /> : null
       )}
+      <div className="h-40 w-screen"></div>
     </div>
   );
 };
