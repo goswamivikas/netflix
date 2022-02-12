@@ -7,7 +7,7 @@ import {
 import ListItem from "./ListItem";
 import { ListInterface } from "pages/Home";
 
-function List({ list }: { list: ListInterface }) {
+function List({ list, type }: { list: ListInterface; type?: string }) {
   const listRef = React.useRef<HTMLDivElement>(null);
 
   const [slideNumber, setSlideNumber] = React.useState<number>(0);
@@ -47,7 +47,7 @@ function List({ list }: { list: ListInterface }) {
           className="containerss ml-12 flex w-max transition-all duration-1000 ease-in-out"
         >
           {list.content.map((item, index) => (
-            <ListItem index={index} item={item} key={item} />
+            <ListItem index={index} id={item} key={item} type={type} />
           ))}
         </div>
         <ArrowForwardIosOutlined

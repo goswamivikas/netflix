@@ -6,16 +6,47 @@ import {
   ThumbUpAltOutlined,
 } from "@material-ui/icons";
 import axios from "axios";
+import { MovieItem } from "./MovieItem";
+import Preview from "./Preview";
+import { Divider } from "@material-ui/core";
 
-function ListItem({ index, item }: { index: number; item: number }) {
+const baseURL: string = "https://image.tmdb.org/t/p/original";
+
+function ListItem({
+  index,
+  id,
+  type,
+}: {
+  index: number;
+  id: number;
+  type?: string;
+}) {
   const [isHovered, setIsHovered] = React.useState<boolean>(false);
+  const [item, setItem] = React.useState<MovieItem | null>(null);
   const trailer: string =
     "https://player.vimeo.com/external/371433846.sd.mp4?s=236da2f3c0fd273d2c6d9a064f3ae35579b2bbdf&profile_id=139&oauth2_token_id=57447761";
   // console.log({ isHovered });
 
   React.useEffect(() => {
-    const getMovie = async () => {};
-  });
+    const getItem = async () => {
+      try {
+        const res = await axios.get("/movies/" + id, {
+          headers: {
+            token:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMDNlMmExYzlhOGY1NGEyMGY3ODhmNyIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2NDQ0Nzk5NDIsImV4cCI6MTY0NTA4NDc0Mn0._u8DIAdo33cWaUVEgtrUL2lGtGT4EOLFOFCBK4m7_sk",
+          },
+          params: {
+            type,
+          },
+        });
+        console.log({ movie: res.data });
+        setItem(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getItem();
+  }, [id, type]);
 
   return (
     <div
@@ -25,19 +56,13 @@ function ListItem({ index, item }: { index: number; item: number }) {
       className="listItem bg-netflix-black group z-99 mr-1 h-32 w-60 cursor-pointer overflow-auto hover:absolute hover:-top-40 hover:h-96 hover:w-96 hover:rounded-md hover:shadow-md hover:shadow-[rgba(255,255,255,0.07)]"
     >
       <img
-        className="h-full w-full object-cover group-hover:h-48"
-        src="https://assets.whatsnewonnetflix.com/external_assets/sggkh+%5B%5Blxx*9*8566*8567_8_muochl_mvg%5Bzig%5B5y016%5Bu811660xz1xwz6x4574zw25259v2w0z6v475y016.jpg"
+        className="h-full w-full  group-hover:h-[216px]"
+        src={`${baseURL}${item?.poster_path || item?.backdrop_path}`}
         alt="movie poster"
       />
       {isHovered && (
-        <div className="">
-          <video
-            src={trailer}
-            autoPlay
-            loop
-            muted
-            className="absolute top-0 left-0 h-48 w-full object-cover"
-          />
+        <>
+          <Preview id={id} type={type} />
           <div className="itemInfo z-[999] flex flex-col overflow-visible p-2">
             <div className="icons mb-2 flex">
               <PlayArrow className="mr-2 rounded-full border-2 border-white p-1 text-base text-white" />
@@ -58,7 +83,7 @@ function ListItem({ index, item }: { index: number; item: number }) {
             </div>
             <div className="genre text-base text-gray-300">Action</div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );
