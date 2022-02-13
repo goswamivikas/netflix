@@ -20,7 +20,7 @@ router.delete("/:id", verify, async (req, res) => {
 router.get("/", verify, async (req, res) => {
   const mediaTypeQuery = req.query.type;
   const genreQuery = req.query.genre;
-
+  console.log("get lists", { mediaTypeQuery, genreQuery });
   let list = [];
   try {
     if (mediaTypeQuery) {
@@ -32,12 +32,14 @@ router.get("/", verify, async (req, res) => {
           { $match: { mediaType: mediaTypeQuery, genre: genreQuery } },
         ]);
       } else {
+        console.log("mediaquery only");
         list = await List.aggregate([
           {
             $sample: { size: 10 },
           },
           { $match: { mediaType: mediaTypeQuery } },
         ]);
+        console.log({ list });
       }
     } else {
       list = await List.aggregate([{ $sample: { size: 10 } }]);

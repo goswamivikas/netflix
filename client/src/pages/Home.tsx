@@ -22,15 +22,16 @@ export const Home = ({ type }: propsTypes) => {
   useEffect(() => {
     const getRandomLists = async () => {
       try {
-        const response = await axios.get(
-          `lists${type ? "?type=" + type : ""}${genre ? "genre=" + genre : ""}`,
-          {
-            headers: {
-              token:
-                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMDNlMmExYzlhOGY1NGEyMGY3ODhmNyIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2NDQ0Nzk5NDIsImV4cCI6MTY0NTA4NDc0Mn0._u8DIAdo33cWaUVEgtrUL2lGtGT4EOLFOFCBK4m7_sk",
-            },
-          }
-        );
+        const response = await axios.get("lists", {
+          headers: {
+            token:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMDNlMmExYzlhOGY1NGEyMGY3ODhmNyIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2NDQ0Nzk5NDIsImV4cCI6MTY0NTA4NDc0Mn0._u8DIAdo33cWaUVEgtrUL2lGtGT4EOLFOFCBK4m7_sk",
+          },
+          params: {
+            type,
+            genre,
+          },
+        });
         console.log({ lists: response.data });
         setLists(response.data);
       } catch (error) {
@@ -45,7 +46,7 @@ export const Home = ({ type }: propsTypes) => {
       <Navbar />
       <Featured type={type} />
       {lists?.map((list, index) =>
-        index === 2 ? <List list={list} key={list._id} type={type} /> : null
+        index === 0 ? <List list={list} key={list._id} type={type} /> : null
       )}
       <div className="h-40 w-screen"></div>
     </div>
