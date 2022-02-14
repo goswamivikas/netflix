@@ -23,9 +23,24 @@ interface Video {
   id: string;
 }
 
-function Preview({ id, type }: { id: number; type?: string }) {
-  const [video, setVideo] = React.useState<Video | null>(null);
+function Preview({ id, type }: { id?: number; type?: string }) {
+  const [video] = useVideo({ type, id });
+  return (
+    <div className="wrapper absolute top-0 left-0 w-full pb-[56.25%]">
+      <iframe
+        src={`https://www.youtube.com/embed/${video?.key}?autoplay=1&mute=1&loop=1&controls=0`}
+        title={video?.name}
+        className="absolute top-0 left-0  h-full w-full border-none"
+      />
+    </div>
+  );
+}
 
+export default Preview;
+
+export function useVideo({ type, id }: { type?: string; id?: number }) {
+  if (type === "tv") type = "series";
+  const [video, setVideo] = React.useState<Video | null>(null);
   React.useEffect(() => {
     const getVideo = async () => {
       const res = await axios.get(`/movies/${id}/video`, {
@@ -42,16 +57,5 @@ function Preview({ id, type }: { id: number; type?: string }) {
     };
     getVideo();
   }, [id, type]);
-
-  return (
-    <div className="wrapper absolute top-0 left-0 w-full pb-[56.25%]">
-      <iframe
-        src={`https://www.youtube.com/embed/${video?.key}?autoplay=1&mute=1&loop=1&controls=0`}
-        title={video?.name}
-        className="absolute top-0 left-0  h-full w-full border-none"
-      />
-    </div>
-  );
+  return [video];
 }
-
-export default Preview;

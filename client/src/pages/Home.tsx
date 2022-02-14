@@ -45,9 +45,9 @@ export const Home = ({ type }: propsTypes) => {
     <div className="myhome overflow-hidden bg-[#141414] text-gray-700">
       <Navbar />
       <Featured type={type} />
-      {lists?.map((list, index) =>
-        index === 0 ? <List list={list} key={list._id} type={type} /> : null
-      )}
+      {/* {lists?.map((list, index) =>
+       / // index === 0 ? <List list={list} key={list._id} type={type} /> : null
+      )} */}
       <div className="h-40 w-screen"></div>
     </div>
   );

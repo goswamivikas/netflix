@@ -7,23 +7,24 @@ const axios = require("axios");
 router.get("/random", verify, async (req, res) => {
   console.log("random");
   const type = req.query.type;
-  let movie;
+  let movie, tmdbRes;
   console.log("random");
   try {
     if (type === "series") {
       console.log("in series");
-      movie = await axios.get(
+      tmdbRes = await axios.get(
         `${process.env.TMDB_BASE_URL}/trending/tv/day?api_key=${process.env.TMDB_API_KEY}`
       );
-      console.log(movie.data);
     } else {
       console.log("in movie");
-      movie = await axios.get(
+      tmdbRes = await axios.get(
         `${process.env.TMDB_BASE_URL}/trending/movie/day?api_key=${process.env.TMDB_API_KEY}`
       );
-      console.log(movie.data.results[0]);
     }
-    res.status(200).json(movie.data.results[0]);
+    console.log({ moviedata: tmdbRes.data.results[0] });
+    let randomIndex = Math.floor(Math.random() * 10 + 1);
+    movie = tmdbRes.data.results[randomIndex];
+    return res.status(200).json(movie);
   } catch (error) {
     res.status(500).json(error);
   }
@@ -75,7 +76,7 @@ router.get("/:id/video", verify, async (req, res) => {
       videos?.data?.results[0];
 
     console.log({ video });
-    res.status(200).json(video);
+    return res.status(200).json(video);
   } catch (error) {
     res.status(500).json(error);
   }

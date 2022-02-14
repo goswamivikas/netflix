@@ -7,6 +7,7 @@
   homepage: string;
   id: number;
   imdb_id: string;
+  media_type: string;
   original_language: string;
   original_title: string;
   overview: string;
