@@ -62,6 +62,7 @@ router.get("/:id/video", verify, async (req, res) => {
       videos = await axios.get(
         `${process.env.TMDB_BASE_URL}/tv/${req.params.id}/videos?api_key=${process.env.TMDB_API_KEY}`
       );
+      console.log(movie.data);
     } else {
       console.log("in movie");
       videos = await axios.get(
