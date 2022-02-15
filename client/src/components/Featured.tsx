@@ -54,33 +54,44 @@ export default function Featured({ type }: FeaturedProps) {
       )}
 
       <img
-        className="absolute top-0 left-0 h-full  w-full"
+        className="poster-image absolute top-0 left-0 h-full  w-full"
         src={`${bgPoster}`}
         alt="movie poster"
       />
-      <div className="wrapper absolute inset-0   pb-[60%]">
+      <div className="wrapper absolute inset-0 overflow-hidden">
         <iframe
           src={`https://www.youtube.com/embed/${video?.key}?autoplay=1&mute=1&loop=1&controls=0&start=15`}
           title={video?.name}
-          className="absolute left-0 top-0 h-full w-full border-2 border-orange-500"
+          className=" pointer-events-none absolute left-0 top-0 h-full w-full scale-150 border-2 border-orange-500 "
         />
+        <div className="fade-to-netflix-bg from-netflix-black absolute bottom-0 h-[15%] w-full  bg-opacity-0 bg-gradient-to-t md:h-[30%] "></div>
       </div>
-      <div className="absolute z-10 h-full w-full bg-gradient-to-r from-black">
-        <div className="info md: absolute left-[60px] bottom-[30%] flex w-[35%] flex-col  text-white">
-          <span className="text-center text-3xl">{item?.title}</span>
-          <span className="description my-5">
+      <div className="info-wrapper absolute z-10 h-full w-full bg-gradient-to-r from-black">
+        <div className="info absolute left-[4%] bottom-[35%] top-16 flex w-[36%] flex-col justify-end text-white  md:bottom-[30%]">
+          <span
+            style={{
+              transformOrigin: "left bottom",
+              transform: "scale(1) translate3d(0px, 0px, 0px)",
+              transitionDuration: "1300ms",
+              transitionDelay: "0ms",
+            }}
+            className="text-left text-[5vw] leading-none"
+          >
+            {item?.title}
+          </span>
+          <span className="description my-[1.5vw] text-[1.5vw]">
             {item?.overview?.substring(0, 100) + "..."}
           </span>
-          <div className="buttons flex items-center justify-start text-black">
+          <div className="buttons mt-[1.5vw] flex items-center justify-start text-black">
             <Link to="/watch">
-              <button className="play mr-2.5 cursor-pointer rounded border-none bg-white px-2.5 py-2 text-lg">
+              <button className="play mr-2.5 flex cursor-pointer items-center justify-around rounded border-none bg-white px-2.5  text-[1.75vw]">
                 <PlayArrow />
-                <span>Play</span>
+                <span>&nbsp; Play</span>
               </button>
             </Link>
-            <button className="more mr-2.5 cursor-pointer rounded border-none bg-gray-600 px-2.5 py-2 text-lg text-white">
+            <button className="more mr-2.5 flex cursor-pointer items-center justify-around rounded border-none bg-gray-600 px-2.5 text-[1.75vw] text-white">
               <InfoOutlined />
-              <span>Info</span>
+              <span> &nbsp; More Info</span>
             </button>
           </div>
         </div>

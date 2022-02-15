@@ -16,9 +16,9 @@ const Navbar = () => {
 
   return (
     <div
-      className={`mynavbar fixed top-0 z-50 w-full text-sm text-white ${gradient}`}
+      className={`mynavbar fixed top-0 z-50 w-full text-[1.5vw] text-white md:text-[1vw] ${gradient}`}
     >
-      <div className="mycontainer flex h-16 flex-row items-center justify-between px-12">
+      <div className="mycontainer flex h-16 flex-row items-center justify-between px-[4%]">
         <div className="myleft children:mr-4 children:cursor-pointer flex items-center">
           <img
             className="h-6"

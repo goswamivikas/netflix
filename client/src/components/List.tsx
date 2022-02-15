@@ -30,21 +30,21 @@ function List({ list, type }: { list: ListInterface; type?: string }) {
   };
 
   return (
-    <div className="list mt-2 ">
-      <span className="listTitle ml-12 text-xl font-medium text-white">
+    <div className="list my-[3vw] border border-red-900 px-[4%]">
+      <span className="listTitle  text-xs font-medium leading-snug text-white md:text-[1.4vw]">
         {list.title}
       </span>
       <div className="wrapper relative">
         {isMoved && (
           <ArrowBackIosOutlined
             onClick={() => handleClick("left")}
-            style={{ width: "48px", height: "100%" }}
+            style={{ width: "4%", height: "100%" }}
             className="absolute  left-0 z-50 cursor-pointer bg-[rgb(22,22,22,0.2)] text-white"
           />
         )}
         <div
           ref={listRef}
-          className="containerss ml-12 flex w-max transition-all duration-1000 ease-in-out"
+          className="containerss grid w-full auto-cols-[33.333%] grid-flow-col transition-all duration-1000 ease-in-out md:auto-cols-[25%]  lg:auto-cols-[25%] xl:auto-cols-[20%] 2xl:auto-cols-[16.666%]"
         >
           {list.content.map((item, index) => (
             <ListItem index={index} id={item} key={item} type={type} />
@@ -52,7 +52,7 @@ function List({ list, type }: { list: ListInterface; type?: string }) {
         </div>
         <ArrowForwardIosOutlined
           onClick={() => handleClick("right")}
-          style={{ width: "48px", height: "100%" }}
+          style={{ width: "4%", height: "100%" }}
           className="absolute right-0 top-0 bottom-0 z-50 cursor-pointer bg-[rgb(22,22,22,0.2)] text-white"
         />
       </div>
