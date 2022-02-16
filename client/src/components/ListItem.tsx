@@ -10,6 +10,7 @@ import { MovieItem } from "./MovieItem";
 import Preview from "./Preview";
 import { Divider } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import moviePosterFallback from "./moviePosterFallback.jpeg";
 
 function ListItem({
   index,
@@ -28,43 +29,48 @@ function ListItem({
 
   const baseURL: string = "https://image.tmdb.org/t/p/original";
 
-  React.useEffect(() => {
-    if (index !== 1) return;
-    const getItem = async () => {
-      try {
-        const res = await axios.get("/movies/" + id, {
-          headers: {
-            token:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMDNlMmExYzlhOGY1NGEyMGY3ODhmNyIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2NDQ0Nzk5NDIsImV4cCI6MTY0NTA4NDc0Mn0._u8DIAdo33cWaUVEgtrUL2lGtGT4EOLFOFCBK4m7_sk",
-          },
-          params: {
-            type,
-          },
-        });
-        console.log({ movie: res.data });
-        setItem(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getItem();
-  }, [id, type]);
+  // React.useEffect(() => {
+  //   if (index !== 1) return;
+  //   const getItem = async () => {
+  //     try {
+  //       const res = await axios.get("/movies/" + id, {
+  //         headers: {
+  //           token:
+  //             "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMDNlMmExYzlhOGY1NGEyMGY3ODhmNyIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2NDQ0Nzk5NDIsImV4cCI6MTY0NTA4NDc0Mn0._u8DIAdo33cWaUVEgtrUL2lGtGT4EOLFOFCBK4m7_sk",
+  //         },
+  //         params: {
+  //           type,
+  //         },
+  //       });
+  //       console.log({ movie: res.data });
+  //       setItem(res.data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+  //   getItem();
+  // }, [id, type]);
 
   return (
-    <div className="relative w-full overflow-visible border border-green-700 pt-[56.25%]">
+    <div className="relative w-full overflow-visible px-[0.2vw] pt-[56.25%]">
       <Link to={{ pathname: "/watch", search: `id=${id}&type=${type}` }}>
         <div
           style={{}}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className="listItem group bg-netflix-black group absolute inset-0 origin-center cursor-pointer rounded-t-[1px] px-[0.2vw] transition-all duration-200 ease-in-out hover:z-50 hover:scale-[1.75] hover:px-0 hover:transition-all"
+          className="listItem group  group absolute inset-0 origin-center cursor-pointer rounded-t-[1px] px-[0.2vw] transition-all duration-200 ease-in-out hover:z-50 hover:scale-[1.75] hover:px-0 "
         >
           <img
-            className="h-full w-full object-cover object-bottom group-hover:invisible"
+            className="h-full w-full object-cover object-bottom group-hover:rounded-t-md"
             src={`${baseURL}${item?.poster_path || item?.backdrop_path}`}
-            alt="movie poster"
+            alt={item?.title ? item?.title : "Movie Poster"}
+            title={item?.title ? item?.title : "Movie Poster"}
+            onError={({ currentTarget }) => {
+              currentTarget.onerror = null;
+              currentTarget.src = moviePosterFallback;
+            }}
           />
-          <PreviewModal item={item} id={id} type={type} />
+          {isHovered && <PreviewModal item={item} id={id} type={type} />}
         </div>
       </Link>
     </div>
@@ -83,7 +89,7 @@ function PreviewModal({
   return (
     <div className="preview-modal hidden w-full overflow-hidden group-hover:block">
       <Preview id={id} type={type} />
-      <div className="itemInfo absolute flex w-full flex-col justify-around p-2 shadow-md shadow-[rgba(255,255,255,0.07)] transition-all">
+      <div className="itemInfo bg-netflix-black absolute flex w-full flex-col justify-around p-2 shadow-md shadow-[rgba(255,255,255,0.07)] transition-all">
         <div className="icons mb-3 flex">
           <PlayArrow className="mr-2 rounded-full border-2 border-slate-300 p-1 text-base text-slate-300 " />
           <Add className="mr-2 rounded-full border-2 border-slate-300 p-1 text-base text-slate-300" />

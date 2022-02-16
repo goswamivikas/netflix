@@ -67,7 +67,7 @@ export default function Featured({ type }: FeaturedProps) {
         <div className="fade-to-netflix-bg from-netflix-black absolute bottom-0 h-[15%] w-full  bg-opacity-0 bg-gradient-to-t md:h-[30%] "></div>
       </div>
       <div className="info-wrapper absolute z-10 h-full w-full bg-gradient-to-r from-black">
-        <div className="info absolute left-[4%] bottom-[35%] top-16 flex w-[36%] flex-col justify-end text-white  md:bottom-[30%]">
+        <div className="info xsm:bottom-[30%] xsm:w-[36%] absolute left-[4%] top-16 flex w-[50%] flex-col justify-end text-white sm:bottom-[25%]  md:bottom-[30%] lg:bottom-[35%]">
           <span
             style={{
               transformOrigin: "left bottom",
