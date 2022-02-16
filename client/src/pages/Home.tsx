@@ -45,7 +45,7 @@ export const Home = ({ type }: propsTypes) => {
     <div className="myhome relative overflow-hidden bg-[#141414] text-gray-700">
       <Navbar />
       <Featured type={type} />
-      <div className="main-content absolute left-0 top-[calc(56.25vw*0.8)] z-10 w-full  md:top-[calc(56.25vw*0.7)]">
+      <div className="main-content absolute left-0 top-[calc(56.25vw*0.8)] z-20 w-full  md:top-[calc(56.25vw*0.7)]">
         {lists?.map((list, index) => (
           <List list={list} key={list._id} type={type} />
         ))}

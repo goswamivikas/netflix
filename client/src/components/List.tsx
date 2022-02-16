@@ -30,7 +30,7 @@ function List({ list, type }: { list: ListInterface; type?: string }) {
   };
 
   return (
-    <div className="list my-[3vw] border border-red-900 px-[4%]">
+    <div className="list my-[3vw] px-[4%]">
       <span className="listTitle  text-xs font-medium leading-snug text-white md:text-[1.4vw]">
         {list.title}
       </span>
