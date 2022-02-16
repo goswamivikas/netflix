@@ -60,7 +60,7 @@ export default function Featured({ type }: FeaturedProps) {
       />
       <div className="wrapper absolute inset-0 overflow-hidden">
         <iframe
-          src={`https://www.youtube.com/embed/${video?.key}?autoplay=1&mute=1&loop=1&controls=0&start=15`}
+          src={`https://www.youtube.com/embed/${video?.key}?autoplay=1&mute=1&loop=1&controls=0&start=15&playlist=${video?.key}`}
           title={video?.name}
           className=" pointer-events-none absolute left-0 top-0 h-full w-full scale-150 border-2 border-orange-500 "
         />

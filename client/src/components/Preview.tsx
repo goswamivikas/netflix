@@ -26,11 +26,11 @@ interface Video {
 function Preview({ id, type }: { id?: number; type?: string }) {
   const [video] = useVideo({ type, id });
   return (
-    <div className="wrapper absolute top-0 left-0 w-full pb-[56.25%]">
+    <div className="wrapper absolute top-0 left-0 w-full overflow-hidden rounded-t-md pb-[56.25%]">
       <iframe
-        src={`https://www.youtube.com/embed/${video?.key}?autoplay=1&mute=1&loop=1&controls=0`}
+        src={`https://www.youtube.com/embed/${video?.key}?autoplay=1&mute=1&loop=1&controls=0&playlist=${video?.key}&start=15`}
         title={video?.name}
-        className="absolute top-0 left-0  h-full w-full border-none"
+        className="pointer-events-none absolute top-0  left-0 h-full w-full scale-150 border-none"
       />
     </div>
   );

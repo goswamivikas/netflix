@@ -39,12 +39,12 @@ function List({ list, type }: { list: ListInterface; type?: string }) {
           <ArrowBackIosOutlined
             onClick={() => handleClick("left")}
             style={{ width: "4%", height: "100%" }}
-            className="absolute  left-0 z-50 cursor-pointer bg-[rgb(22,22,22,0.2)] text-white"
+            className="absolute  left-0 z-10 cursor-pointer bg-[rgb(22,22,22,0.2)] text-white"
           />
         )}
         <div
           ref={listRef}
-          className="containerss grid w-full auto-cols-[33.333%] grid-flow-col transition-all duration-1000 ease-in-out md:auto-cols-[25%]  lg:auto-cols-[25%] xl:auto-cols-[20%] 2xl:auto-cols-[16.666%]"
+          className="containerss xsm:auto-cols-[33.333%] grid w-full auto-cols-[50%] grid-flow-col transition-all duration-1000 ease-in-out md:auto-cols-[25%]  lg:auto-cols-[25%] xl:auto-cols-[20%] 2xl:auto-cols-[16.666%]"
         >
           {list.content.map((item, index) => (
             <ListItem index={index} id={item} key={item} type={type} />
@@ -53,7 +53,7 @@ function List({ list, type }: { list: ListInterface; type?: string }) {
         <ArrowForwardIosOutlined
           onClick={() => handleClick("right")}
           style={{ width: "4%", height: "100%" }}
-          className="absolute right-0 top-0 bottom-0 z-50 cursor-pointer bg-[rgb(22,22,22,0.2)] text-white"
+          className="absolute right-0 top-0 bottom-0 z-10 cursor-pointer bg-[rgb(22,22,22,0.2)] text-white"
         />
       </div>
     </div>

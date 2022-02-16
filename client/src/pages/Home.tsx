@@ -46,9 +46,9 @@ export const Home = ({ type }: propsTypes) => {
       <Navbar />
       <Featured type={type} />
       {lists?.map((list, index) =>
-        index === 0 ? <List list={list} key={list._id} type={type} /> : null
+        index === 1 ? <List list={list} key={list._id} type={type} /> : null
       )}
-      <div className="h-40 w-screen"></div>
+      <div className="h-96 w-screen"></div>
     </div>
   );
 };

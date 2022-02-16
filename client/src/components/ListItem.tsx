@@ -24,11 +24,12 @@ function ListItem({
   const [item, setItem] = React.useState<MovieItem | null>(null);
   const trailer: string =
     "https://player.vimeo.com/external/371433846.sd.mp4?s=236da2f3c0fd273d2c6d9a064f3ae35579b2bbdf&profile_id=139&oauth2_token_id=57447761";
-  // console.log({ isHovered });
+  console.log({ isHovered });
 
   const baseURL: string = "https://image.tmdb.org/t/p/original";
 
   React.useEffect(() => {
+    if (index !== 1) return;
     const getItem = async () => {
       try {
         const res = await axios.get("/movies/" + id, {
@@ -50,71 +51,70 @@ function ListItem({
   }, [id, type]);
 
   return (
-    <div className="relative w-full pt-[56.25%]">
+    <div className="relative w-full overflow-visible border border-green-700 pt-[56.25%]">
       <Link to={{ pathname: "/watch", search: `id=${id}&type=${type}` }}>
         <div
-          style={{ left: isHovered ? index * 240 - 72 + index * 2.5 : "" }}
+          style={{}}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className="listItem bg-netflix-black group z-99 absolute inset-0 cursor-pointer overflow-hidden px-[0.2vw] hover:absolute hover:-top-40 hover:h-96 hover:w-96 hover:rounded-md hover:shadow-md hover:shadow-[rgba(255,255,255,0.07)]"
+          className="listItem group bg-netflix-black group absolute inset-0 origin-center cursor-pointer rounded-t-[1px] px-[0.2vw] transition-all duration-200 ease-in-out hover:z-50 hover:scale-[1.75] hover:px-0 hover:transition-all"
         >
           <img
-            className="h-full w-full object-cover object-bottom group-hover:h-[216px]"
+            className="h-full w-full object-cover object-bottom group-hover:invisible"
             src={`${baseURL}${item?.poster_path || item?.backdrop_path}`}
             alt="movie poster"
           />
-          {isHovered && (
-            <div className="z-[999]">
-              <Preview id={id} type={type} />
-              <div className="itemInfo flex flex-col overflow-visible p-2">
-                <div className="icons mb-3 flex">
-                  <PlayArrow
-                    fontSize="large"
-                    className="mr-2 rounded-full border-2 border-white p-1 text-base text-white"
-                  />
-                  <Add
-                    fontSize="large"
-                    className="mr-2 rounded-full border-2 border-white p-1 text-base text-white"
-                  />
-                  <ThumbUpAltOutlined
-                    fontSize="large"
-                    className="mr-2 rounded-full border-2 border-white p-1 text-base text-white"
-                  />
-                  <ThumbDownAltOutlined
-                    fontSize="large"
-                    className="mr-2 rounded-full border-2 border-white p-1 text-base text-white"
-                  />
-                </div>
-                <div className="iteminfoTop mb-2 flex items-center text-sm font-semibold text-gray-400">
-                  <span className="pr-1 leading-none text-green-500">
-                    100% Match
-                  </span>
-                  <span>{item?.runtime} minutes</span>
-                  <span className="limit mx-2 border border-gray-400 py-0.5 px-1">
-                    {item?.adult ? "+18" : "+14"}
-                  </span>
-                  <span>{item?.release_date}</span>
-                </div>
-                <div className="desc overflow-ellipsis text-sm text-gray-300">
-                  {item?.tagline}
-                </div>
-                <div className="genre my-3 text-base text-gray-300">
-                  <ul className="">
-                    {item?.genres?.map((genre) => (
-                      <li
-                        className="relative mr-2 inline-block before:top-1/2 before:mr-2 before:inline-block before:h-1.5 before:w-1.5 before:-translate-y-1/2 before:rounded-full before:bg-gray-300 first:before:w-0 "
-                        key={genre.id}
-                      >
-                        {genre.name}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          )}
+          <PreviewModal item={item} id={id} type={type} />
         </div>
       </Link>
+    </div>
+  );
+}
+
+function PreviewModal({
+  item,
+  id,
+  type,
+}: {
+  item: MovieItem | null;
+  id: number;
+  type?: string;
+}) {
+  return (
+    <div className="preview-modal hidden w-full overflow-hidden group-hover:block">
+      <Preview id={id} type={type} />
+      <div className="itemInfo absolute flex w-full flex-col justify-around p-2 shadow-md shadow-[rgba(255,255,255,0.07)] transition-all">
+        <div className="icons mb-3 flex">
+          <PlayArrow className="mr-2 rounded-full border-2 border-slate-300 p-1 text-base text-slate-300 " />
+          <Add className="mr-2 rounded-full border-2 border-slate-300 p-1 text-base text-slate-300" />
+          <ThumbUpAltOutlined className="mr-2 rounded-full border-2 border-slate-300 p-1 text-base text-slate-300" />
+          <ThumbDownAltOutlined className="mr-2 rounded-full border-2 border-slate-300 p-1 text-base text-slate-300" />
+        </div>
+        <div className="iteminfoTop mb-2 flex items-center text-[8px] font-semibold text-gray-400 ">
+          <span className="pr-1 leading-none text-green-500">100% Match</span>
+          <span>{item?.runtime} minutes</span>
+          <span className="limit mx-2 border border-gray-400 py-0.5 px-1">
+            {item?.adult ? "+18" : "+14"}
+          </span>
+          {/* <span>{item?.release_date}</span> */}
+        </div>
+        <div className="desc text-[8px] text-gray-300">{item?.tagline}</div>
+        <div className="genre text-[8px] text-gray-300">
+          <ul className="">
+            {item?.genres?.map(
+              (genre, index) =>
+                index < 3 && (
+                  <li
+                    className="relative mr-2 mt-1.5 inline-block before:top-1/2 before:mr-2 before:inline-block before:h-0.5 before:w-0.5 before:-translate-y-1/2 before:rounded-full before:bg-gray-300 first:before:hidden "
+                    key={genre.id}
+                  >
+                    {genre.name}
+                  </li>
+                )
+            )}
+          </ul>
+        </div>
+      </div>
     </div>
   );
 }
