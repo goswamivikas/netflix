@@ -1,8 +1,9 @@
 import Featured from "components/Featured";
 import List from "components/List";
 import Navbar from "components/Navbar";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { UserContext } from "../utils/UserContext";
 
 type propsTypes = {
   type?: string;
@@ -19,13 +20,13 @@ export interface ListInterface {
 export const Home = ({ type }: propsTypes) => {
   const [lists, setLists] = useState<Array<ListInterface>>([]);
   const [genre, setGenre] = useState<string>("");
+  const user = useContext(UserContext);
   useEffect(() => {
     const getRandomLists = async () => {
       try {
         const response = await axios.get("lists", {
           headers: {
-            token:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMDNlMmExYzlhOGY1NGEyMGY3ODhmNyIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2NDQ0Nzk5NDIsImV4cCI6MTY0NTA4NDc0Mn0._u8DIAdo33cWaUVEgtrUL2lGtGT4EOLFOFCBK4m7_sk",
+            token: `Bearer ${user?.accessToken}`,
           },
           params: {
             type,
@@ -39,7 +40,7 @@ export const Home = ({ type }: propsTypes) => {
       }
     };
     getRandomLists();
-  }, [type, genre]);
+  }, [type, genre, user?.accessToken]);
 
   return (
     <div className="myhome relative overflow-hidden bg-[#141414] text-gray-700">

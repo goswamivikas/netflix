@@ -2,45 +2,45 @@ import { Home } from "pages/Home";
 import { Login } from "pages/Login";
 import { Register } from "pages/Register";
 import { Watch } from "pages/Watch";
-
+import React from "react";
+import useUserAuth from "utils/useUserAuth";
+import { UserContext } from "utils/UserContext";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link,
   Navigate,
 } from "react-router-dom";
 
 function App() {
-  // return <Home />;
-  // return <Watch />;
-  // return <Register />;
-  // return <Login />;
-  const user = true;
+  const { user, setUser } = useUserAuth();
+  console.log({ appuser: user });
   return (
-    <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={user ? <Home /> : <Navigate to="/register" />}
-        />
-        <Route
-          path="/login"
-          element={!user ? <Login /> : <Navigate to="/" />}
-        />
-        <Route
-          path="/register"
-          element={!user ? <Register /> : <Navigate to="/" />}
-        />
-        {user && (
-          <>
-            <Route path="/movies" element={<Home type="movie" />} />
-            <Route path="/series" element={<Home type="series" />} />
-            <Route path="/watch" element={<Watch />} />
-          </>
-        )}
-      </Routes>
-    </Router>
+    <UserContext.Provider value={user}>
+      <Router>
+        <Routes>
+          <Route
+            path="/"
+            element={user ? <Home /> : <Navigate to="/register" />}
+          />
+          <Route
+            path="/login"
+            element={!user ? <Login setUser={setUser} /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/register"
+            element={!user ? <Register /> : <Navigate to="/" />}
+          />
+          {user && (
+            <>
+              <Route path="/movies" element={<Home type="movie" />} />
+              <Route path="/series" element={<Home type="series" />} />
+              <Route path="/watch" element={<Watch />} />
+            </>
+          )}
+        </Routes>
+      </Router>
+    </UserContext.Provider>
   );
 }
 

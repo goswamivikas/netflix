@@ -24,9 +24,12 @@ router.post("/register", async (req, res) => {
 
 //LOGIN
 router.post("/login", async (req, res) => {
+  console.log({ "req-body": req.body });
   try {
     const user = await User.findOne({ email: req.body.email });
     !user && res.status(401).json("user doesn't exist");
+
+    console.log({ user });
 
     const bytes = CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY);
     const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
@@ -34,7 +37,7 @@ router.post("/login", async (req, res) => {
     originalPassword !== req.body.password &&
       res.status(401).json("wrong password or username");
 
-    const { password, ...info } = user._doc;
+    const { _id, username, email, profilePic } = user._doc;
 
     const accessToken = jwt.sign(
       { id: user._id, isAdmin: user.isAdmin },
@@ -42,7 +45,7 @@ router.post("/login", async (req, res) => {
       { expiresIn: "7d" }
     );
 
-    res.status(200).json({ ...info, accessToken });
+    res.status(200).json({ _id, username, email, profilePic, accessToken });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
