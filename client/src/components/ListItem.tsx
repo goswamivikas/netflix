@@ -28,13 +28,11 @@ function ListItem({
   const baseURL: string = "https://image.tmdb.org/t/p/original";
 
   // React.useEffect(() => {
-  //   if (index !== 1) return;
   //   const getItem = async () => {
   //     try {
   //       const res = await axios.get("/movies/" + id, {
   //         headers: {
-  //           token:
-  //             `Bearer ${user?.accessToken}`,
+  //           token: `Bearer ${user?.accessToken}`,
   //         },
   //         params: {
   //           type,

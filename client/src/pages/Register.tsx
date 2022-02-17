@@ -1,31 +1,51 @@
-import React from "react";
+import axios from "axios";
+import React, { SyntheticEvent } from "react";
+import { Link } from "react-router-dom";
+import { UserContext } from "../utils/UserContext";
 
 export const Register: React.FC = () => {
   const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
+  const { user, setUser } = React.useContext(UserContext);
 
   const emailRef = React.useRef<HTMLInputElement>(null);
   const passwordRef = React.useRef<HTMLInputElement>(null);
 
   const handleStart = () => {
-    emailRef && emailRef.current && setEmail(emailRef.current.value);
+    setEmail(emailRef?.current?.value || "");
   };
-  const handleFinish = () => {
-    passwordRef &&
-      passwordRef.current &&
-      setPassword(passwordRef.current.value);
+  const handleFinish = async (e: SyntheticEvent) => {
+    e.preventDefault();
+    // setPassword(passwordRef?.current?.value || "");
+    console.log("handle finsih");
+    try {
+      const res = await axios.post("auth/register", {
+        email: email,
+        password: passwordRef?.current?.value,
+      });
+      console.log({ reguser: res.data });
+      setUser(res.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
+
   return (
     <div className=" register bg-netflix-background relative h-screen w-screen bg-cover text-white">
-      <div className="top flex items-center justify-between py-5 px-12">
+      <div className="top relative z-[1] flex items-center justify-between py-5 px-12">
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
           alt=""
           className="logo h-10 "
         />
-        <button className="loginButton semibold rounded-sm border-none bg-[#E50914] py-1 px-4 text-base">
-          Sign IN
-        </button>
+        <Link to="/login">
+          <button
+            onClick={() => console.log("sign in clicked")}
+            className="loginButton semibold cursor-pointer rounded-sm border-none bg-[#E50914] py-1 px-4 text-base"
+          >
+            Sign IN
+          </button>
+        </Link>
       </div>
       <div className="containerrr absolute top-0 left-0 flex h-full w-full flex-col items-center justify-center text-center text-white">
         <h1 className="text-[48px] ">

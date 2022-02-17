@@ -5,8 +5,9 @@ const jwt = require("jsonwebtoken");
 
 //REGISTER
 router.post("/register", async (req, res) => {
+  console.log("in register function");
   const newUser = new User({
-    username: req.body.username,
+    username: req.body.email,
     email: req.body.email,
     password: CryptoJS.AES.encrypt(
       req.body.password,
@@ -15,8 +16,11 @@ router.post("/register", async (req, res) => {
   });
 
   try {
-    const user = await newUser.save();
-    res.status(201).json(user);
+    const { _id, username, email, profilePic } = await newUser.save();
+    const accessToken = jwt.sign({ id: _id, email }, process.env.SECRET_KEY, {
+      expiresIn: "7d",
+    });
+    res.status(201).json({ _id, username, email, profilePic, accessToken });
   } catch (err) {
     res.status(500).json(err);
   }
@@ -40,7 +44,7 @@ router.post("/login", async (req, res) => {
     const { _id, username, email, profilePic } = user._doc;
 
     const accessToken = jwt.sign(
-      { id: user._id, isAdmin: user.isAdmin },
+      { id: user._id, email },
       process.env.SECRET_KEY,
       { expiresIn: "7d" }
     );

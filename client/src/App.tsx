@@ -21,15 +21,21 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={user ? <Home /> : <Navigate to="/register" />}
+            element={user?.accessToken ? <Home /> : <Navigate to="/register" />}
           />
           <Route
             path="/login"
-            element={!user ? <Login setUser={setUser} /> : <Navigate to="/" />}
+            element={
+              !user?.accessToken ? (
+                <Login setUser={setUser} />
+              ) : (
+                <Navigate to="/" />
+              )
+            }
           />
           <Route
             path="/register"
-            element={!user ? <Register /> : <Navigate to="/" />}
+            element={!user?.accessToken ? <Register /> : <Navigate to="/" />}
           />
           {user && (
             <>
