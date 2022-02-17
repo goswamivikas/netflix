@@ -8,4 +8,12 @@ export interface User {
   accessToken: string;
 }
 
-export const UserContext = createContext<User | null>(null);
+export interface UserContext {
+  user: User | null;
+  setUser: Function;
+}
+
+export const UserContext = createContext<UserContext>({
+  user: null,
+  setUser: () => {},
+});

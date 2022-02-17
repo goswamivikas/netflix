@@ -20,7 +20,7 @@ export interface ListInterface {
 export const Home = ({ type }: propsTypes) => {
   const [lists, setLists] = useState<Array<ListInterface>>([]);
   const [genre, setGenre] = useState<string>("");
-  const user = useContext(UserContext);
+  const { user } = useContext(UserContext);
   useEffect(() => {
     const getRandomLists = async () => {
       try {

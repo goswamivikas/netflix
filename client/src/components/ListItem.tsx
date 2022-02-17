@@ -24,7 +24,7 @@ function ListItem({
 }) {
   const [isHovered, setIsHovered] = React.useState<boolean>(false);
   const [item, setItem] = React.useState<MovieItem | null>(null);
-  const { accessToken = null } = React.useContext(UserContext) || {};
+  const { user } = React.useContext(UserContext);
   const baseURL: string = "https://image.tmdb.org/t/p/original";
 
   // React.useEffect(() => {
@@ -34,7 +34,7 @@ function ListItem({
   //       const res = await axios.get("/movies/" + id, {
   //         headers: {
   //           token:
-  //             `Bearer ${accessToken}`,
+  //             `Bearer ${user?.accessToken}`,
   //         },
   //         params: {
   //           type,
@@ -47,7 +47,7 @@ function ListItem({
   //     }
   //   };
   //   getItem();
-  // }, [id, type]);
+  // }, [id, type, user?.accessToken]);
 
   return (
     <div className="relative w-full overflow-visible px-[0.2vw] pt-[56.25%]">

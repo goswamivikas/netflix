@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { useState } from "react";
 import { User } from "./UserContext";
 
 export default function useUserAuth() {
@@ -6,7 +6,7 @@ export default function useUserAuth() {
 
   const [user, setUser] = useState<User | null>(getUser());
 
-  const saveUser = (user: User) => {
+  const saveUser = (user: User | null) => {
     sessionStorage.setItem("user", JSON.stringify(user));
     setUser(user);
   };

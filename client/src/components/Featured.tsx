@@ -13,13 +13,13 @@ type FeaturedProps = {
 export default function Featured({ type }: FeaturedProps) {
   const [item, setItem] = React.useState<MovieItem | null>(null);
   const [video] = useVideo({ id: item?.id, type: item?.media_type });
-  const { accessToken = null } = useContext(UserContext) || {};
+  const { user } = useContext(UserContext);
   React.useEffect(() => {
     const getRandomItem = async () => {
       try {
         const res = await axios.get(`movies/random?type=${type}`, {
           headers: {
-            token: `Bearer ${accessToken}`,
+            token: `Bearer ${user?.accessToken}`,
           },
         });
         console.log({ getRandomItem: res.data });
@@ -29,7 +29,7 @@ export default function Featured({ type }: FeaturedProps) {
       }
     };
     getRandomItem();
-  }, [type, accessToken]);
+  }, [type, user?.accessToken]);
 
   const baseUrl: string = "https://image.tmdb.org/t/p/original";
   const bgPoster: string = `${baseUrl + item?.backdrop_path}`;

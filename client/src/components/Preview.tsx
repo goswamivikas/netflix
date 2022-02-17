@@ -39,12 +39,12 @@ export default Preview;
 export function useVideo({ type, id }: { type?: string; id?: number }) {
   if (type === "tv") type = "series";
   const [video, setVideo] = React.useState<Video | null>(null);
-  const { accessToken = null } = React.useContext(UserContext) || {};
+  const { user } = React.useContext(UserContext);
   React.useEffect(() => {
     const getVideo = async () => {
       const res = await axios.get(`/movies/${id}/video`, {
         headers: {
-          token: `Bearer ${accessToken}`,
+          token: `Bearer ${user?.accessToken}`,
         },
         params: {
           type,
@@ -54,6 +54,6 @@ export function useVideo({ type, id }: { type?: string; id?: number }) {
       console.log({ videodata: res });
     };
     getVideo();
-  }, [id, type, accessToken]);
+  }, [id, type, user?.accessToken]);
   return [video];
 }
