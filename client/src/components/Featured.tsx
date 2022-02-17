@@ -1,9 +1,11 @@
 import { InfoOutlined, PlayArrow } from "@material-ui/icons";
 import axios from "axios";
-import React from "react";
+import React, { useContext } from "react";
 import { MovieItem } from "./MovieItem";
 import { Link } from "react-router-dom";
 import Preview, { useVideo } from "./Preview";
+import { UserContext } from "../utils/UserContext";
+
 type FeaturedProps = {
   type?: string;
 };
@@ -11,13 +13,13 @@ type FeaturedProps = {
 export default function Featured({ type }: FeaturedProps) {
   const [item, setItem] = React.useState<MovieItem | null>(null);
   const [video] = useVideo({ id: item?.id, type: item?.media_type });
+  const { accessToken = null } = useContext(UserContext) || {};
   React.useEffect(() => {
     const getRandomItem = async () => {
       try {
         const res = await axios.get(`movies/random?type=${type}`, {
           headers: {
-            token:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMDNlMmExYzlhOGY1NGEyMGY3ODhmNyIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2NDQ0Nzk5NDIsImV4cCI6MTY0NTA4NDc0Mn0._u8DIAdo33cWaUVEgtrUL2lGtGT4EOLFOFCBK4m7_sk",
+            token: `Bearer ${accessToken}`,
           },
         });
         console.log({ getRandomItem: res.data });
@@ -27,7 +29,7 @@ export default function Featured({ type }: FeaturedProps) {
       }
     };
     getRandomItem();
-  }, [type]);
+  }, [type, accessToken]);
 
   const baseUrl: string = "https://image.tmdb.org/t/p/original";
   const bgPoster: string = `${baseUrl + item?.backdrop_path}`;

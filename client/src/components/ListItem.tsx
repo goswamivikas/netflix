@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import {
   Add,
   PlayArrow,
@@ -11,6 +11,7 @@ import Preview from "./Preview";
 import { Divider } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import moviePosterFallback from "./moviePosterFallback.jpeg";
+import { UserContext } from "../utils/UserContext";
 
 function ListItem({
   index,
@@ -23,10 +24,7 @@ function ListItem({
 }) {
   const [isHovered, setIsHovered] = React.useState<boolean>(false);
   const [item, setItem] = React.useState<MovieItem | null>(null);
-  const trailer: string =
-    "https://player.vimeo.com/external/371433846.sd.mp4?s=236da2f3c0fd273d2c6d9a064f3ae35579b2bbdf&profile_id=139&oauth2_token_id=57447761";
-  console.log({ isHovered });
-
+  const { accessToken = null } = React.useContext(UserContext) || {};
   const baseURL: string = "https://image.tmdb.org/t/p/original";
 
   // React.useEffect(() => {
@@ -36,7 +34,7 @@ function ListItem({
   //       const res = await axios.get("/movies/" + id, {
   //         headers: {
   //           token:
-  //             "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMDNlMmExYzlhOGY1NGEyMGY3ODhmNyIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2NDQ0Nzk5NDIsImV4cCI6MTY0NTA4NDc0Mn0._u8DIAdo33cWaUVEgtrUL2lGtGT4EOLFOFCBK4m7_sk",
+  //             `Bearer ${accessToken}`,
   //         },
   //         params: {
   //           type,

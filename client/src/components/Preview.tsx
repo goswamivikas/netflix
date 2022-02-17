@@ -6,9 +6,7 @@ import {
   ThumbDownAltOutlined,
   ThumbUpAltOutlined,
 } from "@material-ui/icons";
-
-const trailer: string =
-  "https://player.vimeo.com/external/371433846.sd.mp4?s=236da2f3c0fd273d2c6d9a064f3ae35579b2bbdf&profile_id=139&oauth2_token_id=57447761";
+import { UserContext } from "../utils/UserContext";
 
 interface Video {
   iso_639_1: string;
@@ -41,12 +39,12 @@ export default Preview;
 export function useVideo({ type, id }: { type?: string; id?: number }) {
   if (type === "tv") type = "series";
   const [video, setVideo] = React.useState<Video | null>(null);
+  const { accessToken = null } = React.useContext(UserContext) || {};
   React.useEffect(() => {
     const getVideo = async () => {
       const res = await axios.get(`/movies/${id}/video`, {
         headers: {
-          token:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMDNlMmExYzlhOGY1NGEyMGY3ODhmNyIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2NDQ0Nzk5NDIsImV4cCI6MTY0NTA4NDc0Mn0._u8DIAdo33cWaUVEgtrUL2lGtGT4EOLFOFCBK4m7_sk",
+          token: `Bearer ${accessToken}`,
         },
         params: {
           type,
@@ -56,6 +54,6 @@ export function useVideo({ type, id }: { type?: string; id?: number }) {
       console.log({ videodata: res });
     };
     getVideo();
-  }, [id, type]);
+  }, [id, type, accessToken]);
   return [video];
 }

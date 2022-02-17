@@ -12,7 +12,6 @@ function List({ list, type }: { list: ListInterface; type?: string }) {
 
   const [slideNumber, setSlideNumber] = React.useState<number>(0);
   const [isMoved, setIsMoved] = React.useState<boolean>(false);
-
   const handleClick = (direction: string) => {
     if (listRef && listRef.current) {
       let distance: number = listRef.current?.getBoundingClientRect().x - 48;
