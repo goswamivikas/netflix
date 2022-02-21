@@ -7,6 +7,7 @@ const logger = require("../logger");
 const List = require("../../models/List");
 
 const fetchFromTMDB = async ({ apiUrl, count }) => {
+  logger.info("fetchFromTMDB", { count, apiUrl });
   let pages = new Array(Math.ceil(count / 20))
     .fill(0)
     .map((item, idx) => idx + 1); //[1,2,3] 20 items per page
@@ -25,10 +26,12 @@ const fetchFromTMDB = async ({ apiUrl, count }) => {
     )
   ).catch((err) => logger.error(err));
 
+  logger.info("exit fetchFromTMDB", { count: result.length });
   return result;
 };
 
 const fetchTitlesByIdFromTMDB = async ({ ids, media_type }) => {
+  logger.info("fetchTitlesByIdFromTMDB", { count: ids?.length, media_type });
   const results = [];
   await Promise.all(
     ids.map(async (id) => {
@@ -47,34 +50,60 @@ const fetchTitlesByIdFromTMDB = async ({ ids, media_type }) => {
       }
     })
   );
+  logger.info("exit fetchTitlesByIdFromTMDB", { count: results.length });
   return results;
 };
 
 const clearDb = async () => {
-  await Trending.deleteMany({});
-  await Movie.deleteMany({});
-  await Tv.deleteMany({});
-  await List.deleteMany({});
+  logger.info("clearDb");
+  try {
+    await Trending.deleteMany({});
+    await Movie.deleteMany({});
+    await Tv.deleteMany({});
+    await List.deleteMany({});
+  } catch (error) {
+    logger.error(error);
+  }
+  logger.info("exit clearDb");
 };
 
 const populateDb = async ({ trendingMovies, trendingTvs, movies, tvs }) => {
-  await Trending.insertMany(trendingMovies);
-  await Trending.insertMany(trendingTvs);
-  await Movie.insertMany(movies);
-  await Tv.insertMany(tvs);
+  logger.info("populateDb", {
+    trendingMoviesCount: trendingMovies?.length,
+    trendingTvsCount: trendingTvs?.length,
+    moviesCount: movies?.length,
+    tvsCount: tvs?.length,
+  });
+  try {
+    await Trending.insertMany(trendingMovies);
+    await Trending.insertMany(trendingTvs);
+    await Movie.insertMany(movies);
+    await Tv.insertMany(tvs);
+  } catch (error) {
+    logger.error(errro);
+  }
+
+  logger.info("exit populateDb");
 };
 
 const getIds = ({ trendingMovies, popularMovies, trendingTvs, popularTvs }) => {
-  let movieIds = [...trendingMovies, ...popularMovies].map((movie) => movie.id);
-  let tvIds = [...trendingTvs, ...popularTvs].map((tv) => tv.id);
+  logger.info("getIds");
+  try {
+    let movieIds = [...trendingMovies, ...popularMovies].map(
+      (movie) => movie.id
+    );
+    let tvIds = [...trendingTvs, ...popularTvs].map((tv) => tv.id);
 
-  movieIds = [...new Set(movieIds)];
-  tvIds = [...new Set(tvIds)];
-
-  return { movieIds, tvIds };
+    movieIds = [...new Set(movieIds)];
+    tvIds = [...new Set(tvIds)];
+    logger.info("exit getIds");
+    return { movieIds, tvIds };
+  } catch (error) {
+    logger.error(error);
+  }
 };
 
-const buildLists = async ({
+const buildNetflixLists = async ({
   trendingMovies,
   popularMovies,
   trendingTvs,
@@ -82,6 +111,7 @@ const buildLists = async ({
   movies,
   tvs,
 }) => {
+  logger.info("buildNetflixLists");
   await buildPopularLists({
     movies: popularMovies.slice(0, 20),
     tvs: popularTvs.slice(0, 20),
@@ -94,29 +124,37 @@ const buildLists = async ({
   await buildGenreLists({ titles: tvs, media_type: "tv" });
 };
 
+const fetchData = async ({ count }) => {
+  logger.info();
+  const trendingMovies = await fetchFromTMDB({
+    apiUrl: "/trending/movie/week",
+    count,
+  });
+
+  const trendingTvs = await fetchFromTMDB({
+    apiUrl: "/trending/tv/week",
+    count,
+  });
+
+  const popularMovies = await fetchFromTMDB({
+    apiUrl: "/movie/popular",
+    count,
+  });
+
+  const popularTvs = await fetchFromTMDB({
+    apiUrl: "/tv/popular",
+    count,
+  });
+
+  return { trendingMovies, trendingTvs, popularMovies, popularTvs };
+};
+
 module.exports = function (agenda) {
   agenda.define("sync tmdb", async (job) => {
     logger.info("starting sync tmdb job");
 
-    const trendingMovies = await fetchFromTMDB({
-      apiUrl: "/trending/movie/week",
-      count: 20,
-    });
-
-    const trendingTvs = await fetchFromTMDB({
-      apiUrl: "/trending/tv/week",
-      count: 20,
-    });
-
-    const popularMovies = await fetchFromTMDB({
-      apiUrl: "/movie/popular",
-      count: 20,
-    });
-
-    const popularTvs = await fetchFromTMDB({
-      apiUrl: "/tv/popular",
-      count: 20,
-    });
+    const { trendingMovies, trendingTvs, popularMovies, popularTvs } =
+      await fetchData({ count: 20 }); //return items equal to count for each category
 
     const { movieIds, tvIds } = getIds({
       trendingMovies,
@@ -190,7 +228,7 @@ const buildTrendingLists = async ({ movies, tvs }) => {
 };
 
 const buildPopularLists = async ({ movies, tvs }) => {
-  logger.info("start - buildPopularLists");
+  logger.info("buildPopularLists()");
   let mlist = movies.map((item) => {
     return { id: item.id, media_type: "movie" };
   });
@@ -215,11 +253,11 @@ const buildPopularLists = async ({ movies, tvs }) => {
     content: mlist,
   });
   await popularInMovie.save();
-  logger.info("end - buildPopularLists");
+  logger.info("exit buildPopularLists");
 };
 
 const buildGenreLists = async ({ titles, media_type }) => {
-  logger.info("start - buildGenreLists");
+  logger.info("buildGenreLists()");
   let itemsByGenreId = {};
   titles.forEach((item) => {
     item.genres.forEach((genre) => {
@@ -238,7 +276,7 @@ const buildGenreLists = async ({ titles, media_type }) => {
     if (items.length > 5) {
       let content = items.map((item) => ({ id: item, media_type: "movie" }));
       let list = {
-        title: `${name} ${media_type}s`,
+        title: `${name} in ${media_type == "tv" ? "Tv Shows" : "Movies"}`,
         api_name: "",
         content: content,
         genre: { id, name },
@@ -247,7 +285,7 @@ const buildGenreLists = async ({ titles, media_type }) => {
       logger.debug("saved ", list);
     }
   }
-  logger.info("end - buildGenreLists");
+  logger.info("exit buildGenreLists");
 };
 
 const saveList = async (list) => {
