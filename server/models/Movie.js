@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const VideoSchema = require("./Video");
 const MovieSchema = new mongoose.Schema(
   {
     adult: {
@@ -8,6 +8,7 @@ const MovieSchema = new mongoose.Schema(
     backdrop_path: {
       type: "String",
     },
+    videos: [VideoSchema],
     belongs_to_collection: {
       type: "Mixed",
     },

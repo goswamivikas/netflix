@@ -3,10 +3,11 @@ const mongoose = require("mongoose");
 const ListSchema = new mongoose.Schema(
   {
     title: { type: String, required: true, unique: true },
-    mediaType: { type: String },
-    genre: { type: String },
+    api_name: { type: String },
+    media_type: { type: String },
+    genre: { id: { type: String }, name: { type: String } },
     content: { type: Array },
-    apiUrl: { type: String },
+    api_url: { type: String },
   },
   { timestamps: true }
 );

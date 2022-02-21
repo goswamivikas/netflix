@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const VideoSchema = require("./Video");
 
 const TvSchema = new mongoose.Schema(
   {

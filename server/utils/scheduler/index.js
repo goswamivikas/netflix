@@ -16,6 +16,7 @@ tmdbSync(agenda);
   // IIFE to give access to async/await
   await agenda.start();
   await agenda.now("sync tmdb");
+  // await agenda.now("build netflix lists");
 })();
 
 module.exports = agenda;
