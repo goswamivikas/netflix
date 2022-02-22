@@ -5,19 +5,15 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { UserContext } from "../utils/UserContext";
 
-type propsTypes = {
-  type?: string;
-};
-
 export interface ListInterface {
   _id: string;
   title: string;
-  mediaType: string;
-  genre: string;
-  content: number[];
+  media_type: string;
+  genre: { id: number; name: string };
+  content: { id: number; media_type: string }[];
 }
 
-export const Home = ({ type }: propsTypes) => {
+export const Home = ({ media_type }: { media_type?: string }) => {
   const [lists, setLists] = useState<Array<ListInterface>>([]);
   const [genre, setGenre] = useState<string>("");
   const { user } = useContext(UserContext);
@@ -29,7 +25,7 @@ export const Home = ({ type }: propsTypes) => {
             token: `Bearer ${user?.accessToken}`,
           },
           params: {
-            type,
+            media_type,
             genre,
           },
         });
@@ -40,18 +36,17 @@ export const Home = ({ type }: propsTypes) => {
       }
     };
     getRandomLists();
-  }, [type, genre, user?.accessToken]);
+  }, [media_type, genre, user?.accessToken]);
 
   return (
-    <div className="myhome relative overflow-hidden bg-[#141414] text-gray-700">
+    <div className="myhome relative h-screen w-screen overflow-scroll bg-[#141414] text-gray-700">
       <Navbar />
-      <Featured type={type} />
+      <Featured media_type={media_type} />
       <div className="main-content absolute left-0 top-[calc(56.25vw*0.8)] z-20 w-full  md:top-[calc(56.25vw*0.7)]">
         {lists?.map((list, index) => (
-          <List list={list} key={list._id} type={type} />
+          <List list={list} key={list._id} type={media_type} />
         ))}
       </div>
-      <div className="h-96 w-screen"></div>
     </div>
   );
 };

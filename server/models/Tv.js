@@ -9,6 +9,7 @@ const TvSchema = new mongoose.Schema(
     backdrop_path: {
       type: "String",
     },
+    videos: [VideoSchema],
     created_by: {
       type: ["Mixed"],
     },

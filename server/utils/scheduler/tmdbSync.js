@@ -259,7 +259,7 @@ const buildPopularLists = async ({ movies, tvs }) => {
 };
 
 const buildGenreLists = async ({ titles, media_type }) => {
-  logger.info("buildGenreLists()");
+  logger.info("buildGenreLists()", { media_type });
   let itemsByGenreId = {};
   titles.forEach((item) => {
     item.genres.forEach((genre) => {
@@ -272,7 +272,6 @@ const buildGenreLists = async ({ titles, media_type }) => {
       }
     });
   });
-  logger.debug(itemsByGenreId);
   for (id in itemsByGenreId) {
     const { items, name } = itemsByGenreId[id];
     if (items.length > 5) {
@@ -285,7 +284,6 @@ const buildGenreLists = async ({ titles, media_type }) => {
         genre: { id, name },
       };
       await saveList(list);
-      logger.debug("saved ", list);
     }
   }
   logger.info("exit buildGenreLists");

@@ -21,8 +21,8 @@ interface Video {
   id: string;
 }
 
-function Preview({ id, type }: { id?: number; type?: string }) {
-  const [video] = useVideo({ type, id });
+function Preview({ id, media_type }: { id?: number; media_type?: string }) {
+  const [video] = useVideo({ media_type, id });
   return (
     <div className="wrapper absolute top-0 left-0 w-full overflow-hidden rounded-t-md pb-[56.25%]">
       <iframe
@@ -36,24 +36,29 @@ function Preview({ id, type }: { id?: number; type?: string }) {
 
 export default Preview;
 
-export function useVideo({ type, id }: { type?: string; id?: number }) {
-  if (type === "tv") type = "series";
+export function useVideo({
+  media_type,
+  id,
+}: {
+  media_type?: string;
+  id?: number;
+}) {
   const [video, setVideo] = React.useState<Video | null>(null);
   const { user } = React.useContext(UserContext);
   React.useEffect(() => {
     const getVideo = async () => {
-      const res = await axios.get(`/movies/${id}/video`, {
+      const res = await axios.get(`/media/${id}/video`, {
         headers: {
           token: `Bearer ${user?.accessToken}`,
         },
         params: {
-          type,
+          media_type,
         },
       });
       setVideo(res.data);
       console.log({ videodata: res });
     };
     getVideo();
-  }, [id, type, user?.accessToken]);
+  }, [id, media_type, user?.accessToken]);
   return [video];
 }

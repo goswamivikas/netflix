@@ -1,4 +1,4 @@
-import React from "react";
+import React, { SyntheticEvent } from "react";
 import {
   Add,
   PlayArrow,
@@ -7,6 +7,7 @@ import {
 } from "@material-ui/icons";
 import axios from "axios";
 import { MovieItem } from "./MovieItem";
+import { TvItem } from "./TvItem";
 import Preview from "./Preview";
 import { Divider } from "@material-ui/core";
 import { Link } from "react-router-dom";
@@ -15,49 +16,66 @@ import { UserContext } from "../utils/UserContext";
 
 function ListItem({
   index,
-  id,
+  _item,
   type,
 }: {
   index: number;
-  id: number;
+  _item: { id: number; media_type: string };
   type?: string;
 }) {
+  const { id, media_type } = _item;
   const [isHovered, setIsHovered] = React.useState<boolean>(false);
   const [item, setItem] = React.useState<MovieItem | null>(null);
   const { user } = React.useContext(UserContext);
   const baseURL: string = "https://image.tmdb.org/t/p/original";
 
-  // React.useEffect(() => {
-  //   const getItem = async () => {
-  //     try {
-  //       const res = await axios.get("/movies/" + id, {
-  //         headers: {
-  //           token: `Bearer ${user?.accessToken}`,
-  //         },
-  //         params: {
-  //           type,
-  //         },
-  //       });
-  //       console.log({ movie: res.data });
-  //       setItem(res.data);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-  //   getItem();
-  // }, [id, type, user?.accessToken]);
+  React.useEffect(() => {
+    const getItem = async () => {
+      try {
+        const res = await axios.get("/media/" + id, {
+          headers: {
+            token: `Bearer ${user?.accessToken}`,
+          },
+          params: {
+            media_type,
+          },
+        });
+        setItem(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getItem();
+  }, [id, media_type, user?.accessToken]);
+  let timer: ReturnType<typeof setTimeout>;
+  let scale: string = "";
+  const handleMouseEnter = (e: SyntheticEvent) => {
+    e.preventDefault();
+    let listItem: HTMLElement = e.target as HTMLElement;
 
+    timer = setTimeout(function () {
+      setIsHovered(true);
+    }, 200);
+  };
+
+  const handleMouseLeave = (e: SyntheticEvent) => {
+    e.preventDefault();
+    let listItem: HTMLElement = e.target as HTMLElement;
+    listItem.style.transform = "";
+    clearTimeout(timer);
+    setIsHovered(false);
+  };
+  console.log({ isHovered });
   return (
     <div className="relative w-full overflow-visible px-[0.2vw] pt-[56.25%]">
       <Link to={{ pathname: "/watch", search: `id=${id}&type=${type}` }}>
         <div
-          style={{}}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          className="listItem group  group absolute inset-0 origin-center cursor-pointer rounded-t-[1px] px-[0.2vw] transition-all duration-200 ease-in-out hover:z-50 hover:scale-[1.75] hover:px-0 "
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          className={`listItem group group absolute inset-0 origin-center cursor-pointer rounded-t-[1px] px-[0.2vw] transition-all duration-200 ease-in-out hover:z-10 hover:scale-150 hover:px-0`}
         >
           <img
-            className="h-full w-full object-cover object-bottom group-hover:rounded-t-md"
+            className="h-full w-full rounded-t-md object-cover object-bottom"
             src={`${baseURL}${item?.poster_path || item?.backdrop_path}`}
             alt={item?.title ? item?.title : "Movie Poster"}
             title={item?.title ? item?.title : "Movie Poster"}
@@ -66,7 +84,9 @@ function ListItem({
               currentTarget.src = moviePosterFallback;
             }}
           />
-          {isHovered && <PreviewModal item={item} id={id} type={type} />}
+          {isHovered && (
+            <PreviewModal item={item} id={id} media_type={media_type} />
+          )}
         </div>
       </Link>
     </div>
@@ -76,16 +96,16 @@ function ListItem({
 function PreviewModal({
   item,
   id,
-  type,
+  media_type,
 }: {
   item: MovieItem | null;
   id: number;
-  type?: string;
+  media_type?: string;
 }) {
   return (
     <div className="preview-modal hidden w-full overflow-hidden group-hover:block">
-      <Preview id={id} type={type} />
-      <div className="itemInfo bg-netflix-black absolute flex w-full flex-col justify-around p-2 shadow-md shadow-[rgba(255,255,255,0.07)] transition-all">
+      <Preview id={id} media_type={media_type} />
+      <div className="itemInfo bg-netflix-black absolute flex w-full flex-col justify-around p-2 shadow-lg shadow-[rgba(255,255,255,0.07)] transition-all">
         <div className="icons mb-3 flex">
           <PlayArrow className="mr-2 rounded-full border-2 border-slate-300 p-1 text-base text-slate-300 " />
           <Add className="mr-2 rounded-full border-2 border-slate-300 p-1 text-base text-slate-300" />

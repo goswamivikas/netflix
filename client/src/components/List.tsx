@@ -46,7 +46,7 @@ function List({ list, type }: { list: ListInterface; type?: string }) {
           className="containerss xsm:auto-cols-[33.333%] grid w-full auto-cols-[50%] grid-flow-col transition-all duration-1000 ease-in-out md:auto-cols-[25%]  lg:auto-cols-[25%] xl:auto-cols-[20%] 2xl:auto-cols-[16.666%]"
         >
           {list.content.map((item, index) => (
-            <ListItem index={index} id={item} key={item} type={type} />
+            <ListItem index={index} _item={item} key={item?.id} type={type} />
           ))}
         </div>
         <ArrowForwardIosOutlined

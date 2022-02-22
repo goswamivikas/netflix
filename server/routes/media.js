@@ -8,10 +8,15 @@ const Trending = require("../models/Trending");
 
 //GET RANDOM
 router.get("/random", verify, async (req, res) => {
-  const { media_type, genre } = req.query;
-  const media = await Trending.findOne({ media_type, genres: genre }).skip(
-    Math.random() * 10
-  );
+  const { media_type, genreId } = req.query;
+  dbQuery = {};
+  if (media_type) dbQuery["media_type"] = media_type;
+  if (genreId) dbQuery["genre_ids"] = parseInt(genreId);
+  console.log(dbQuery);
+  const [media] = await Trending.aggregate([
+    { $match: dbQuery },
+    { $sample: { size: 1 } },
+  ]);
   if (!media) return res.status(404).json("no media present");
   return res.status(200).json(media);
 });
