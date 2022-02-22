@@ -18,12 +18,12 @@ function List({ list, type }: { list: ListInterface; type?: string }) {
       console.log({ distance });
       if (direction === "left" && slideNumber > 0) {
         setSlideNumber(slideNumber - 1);
-        listRef.current.style.transform = `translateX(${244 + distance}px)`;
+        listRef.current.style.transform = `translateX(calc(${distance}px + 80vw))`;
       }
       if (direction === "right") {
         setSlideNumber(slideNumber + 1);
         setIsMoved(true);
-        listRef.current.style.transform = `translateX(${-244 + distance}px)`;
+        listRef.current.style.transform = `translateX(calc(${distance}px - 80vw))`;
       }
     }
   };
@@ -37,8 +37,8 @@ function List({ list, type }: { list: ListInterface; type?: string }) {
         {isMoved && (
           <ArrowBackIosOutlined
             onClick={() => handleClick("left")}
-            style={{ width: "4%", height: "100%" }}
-            className="absolute  -left-[0] z-10 cursor-pointer bg-[rgb(22,22,22,0.2)] text-white"
+            style={{ width: "40px", height: "100%" }}
+            className="absolute  -left-[4%] z-10 cursor-pointer bg-[rgb(22,22,22,0.2)] text-white"
           />
         )}
         <div
@@ -51,7 +51,7 @@ function List({ list, type }: { list: ListInterface; type?: string }) {
         </div>
         <ArrowForwardIosOutlined
           onClick={() => handleClick("right")}
-          style={{ width: "4%", height: "100%" }}
+          style={{ width: "40px", height: "100%" }}
           className="absolute -right-[0] top-0 bottom-0 z-10 cursor-pointer bg-[#1d1b1bb2] text-white"
         />
       </div>
