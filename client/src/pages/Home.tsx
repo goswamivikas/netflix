@@ -39,7 +39,7 @@ export const Home = ({ media_type }: { media_type?: string }) => {
   }, [media_type, genre, user?.accessToken]);
 
   return (
-    <div className="myhome relative h-screen w-screen overflow-scroll bg-[#141414] text-gray-700">
+    <div className="myhome relative h-screen w-screen overflow-x-hidden bg-[#141414] text-gray-700">
       <Navbar />
       <Featured media_type={media_type} />
       <div className="main-content absolute left-0 top-[calc(56.25vw*0.8)] z-20 w-full  md:top-[calc(56.25vw*0.7)]">

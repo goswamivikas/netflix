@@ -27,7 +27,7 @@ function ListItem({
   const [isHovered, setIsHovered] = React.useState<boolean>(false);
   const [item, setItem] = React.useState<MovieItem | null>(null);
   const { user } = React.useContext(UserContext);
-  const baseURL: string = "https://image.tmdb.org/t/p/original";
+  const baseURL: string = "https://image.tmdb.org/t/p/w500";
 
   React.useEffect(() => {
     const getItem = async () => {
@@ -72,7 +72,7 @@ function ListItem({
         <div
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-          className={`listItem group group absolute inset-0 origin-center cursor-pointer rounded-t-[1px] px-[0.2vw] transition-all duration-200 ease-in-out hover:z-10 hover:scale-150 hover:px-0`}
+          className={`listItem group group absolute inset-0 origin-center cursor-pointer rounded-t-[1px] px-[0.2vw] transition-all duration-200 ease-in-out hover:z-[999] hover:scale-150 hover:px-0`}
         >
           <img
             className="h-full w-full rounded-t-md object-cover object-bottom"

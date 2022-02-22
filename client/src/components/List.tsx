@@ -29,7 +29,7 @@ function List({ list, type }: { list: ListInterface; type?: string }) {
   };
 
   return (
-    <div className="list my-[3vw] px-[4%]">
+    <div className="list my-[3vw] pl-[4%]">
       <span className="listTitle  text-xs font-medium leading-snug text-white md:text-[1.4vw]">
         {list.title}
       </span>
@@ -38,7 +38,7 @@ function List({ list, type }: { list: ListInterface; type?: string }) {
           <ArrowBackIosOutlined
             onClick={() => handleClick("left")}
             style={{ width: "4%", height: "100%" }}
-            className="absolute  left-0 z-10 cursor-pointer bg-[rgb(22,22,22,0.2)] text-white"
+            className="absolute  -left-[0] z-10 cursor-pointer bg-[rgb(22,22,22,0.2)] text-white"
           />
         )}
         <div
@@ -52,7 +52,7 @@ function List({ list, type }: { list: ListInterface; type?: string }) {
         <ArrowForwardIosOutlined
           onClick={() => handleClick("right")}
           style={{ width: "4%", height: "100%" }}
-          className="absolute right-0 top-0 bottom-0 z-10 cursor-pointer bg-[rgb(22,22,22,0.2)] text-white"
+          className="absolute -right-[0] top-0 bottom-0 z-10 cursor-pointer bg-[#1d1b1bb2] text-white"
         />
       </div>
     </div>
