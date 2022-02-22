@@ -276,11 +276,12 @@ const buildGenreLists = async ({ titles, media_type }) => {
   for (id in itemsByGenreId) {
     const { items, name } = itemsByGenreId[id];
     if (items.length > 5) {
-      let content = items.map((item) => ({ id: item, media_type: "movie" }));
+      let content = items.map((item) => ({ id: item, media_type }));
       let list = {
-        title: `${name} in ${media_type == "tv" ? "Tv Shows" : "Movies"}`,
+        title: `${name} ${media_type == "tv" ? "Tv Shows" : "Movies"}`,
         api_name: "",
         content: content,
+        media_type: media_type,
         genre: { id, name },
       };
       await saveList(list);

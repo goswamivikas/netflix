@@ -2,6 +2,7 @@ const router = require("express").Router();
 const verify = require("../verifyToken");
 const axios = require("axios");
 const List = require("../models/List");
+const logger = require("../utils/logger");
 
 //DELETE
 router.delete("/:id", verify, async (req, res) => {
@@ -18,36 +19,17 @@ router.delete("/:id", verify, async (req, res) => {
 });
 
 router.get("/", verify, async (req, res) => {
-  const mediaTypeQuery = req.query.type;
-  const genreQuery = req.query.genre;
-  console.log("get lists", { mediaTypeQuery, genreQuery });
-  let list = [];
-  try {
-    if (mediaTypeQuery) {
-      if (genreQuery) {
-        list = await List.aggregate([
-          {
-            $sample: { size: 10 },
-          },
-          { $match: { mediaType: mediaTypeQuery, genre: genreQuery } },
-        ]);
-      } else {
-        console.log("mediaquery only");
-        list = await List.aggregate([
-          {
-            $sample: { size: 10 },
-          },
-          { $match: { mediaType: mediaTypeQuery } },
-        ]);
-        console.log({ list });
-      }
-    } else {
-      list = await List.aggregate([{ $sample: { size: 10 } }]);
-    }
-    res.status(200).json(list);
-  } catch (err) {
-    res.status(500).json(err);
-  }
+  const { media_type, genre } = req.query;
+
+  dbQuery = {};
+
+  if (media_type) dbQuery["media_type"] = media_type;
+  if (genre) dbQuery["genre.id"] = parseInt(genre);
+
+  let list = await List.find(dbQuery).limit(10);
+
+  if (!list) return res.status(404).json("no list present");
+  return res.status(200).json(list);
 });
 
 //CREATE
