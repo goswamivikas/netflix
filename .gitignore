@@ -1,0 +1,5 @@
+.vscode/
+app.log
+response.js
+server/app.log
+temp.js
