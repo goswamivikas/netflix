@@ -1,11 +1,5 @@
 import React from "react";
 import axios from "axios";
-import {
-  Add,
-  PlayArrow,
-  ThumbDownAltOutlined,
-  ThumbUpAltOutlined,
-} from "@material-ui/icons";
 import { UserContext } from "../utils/UserContext";
 
 interface Video {
@@ -56,7 +50,6 @@ export function useVideo({
         },
       });
       setVideo(res.data);
-      console.log({ videodata: res });
     };
     getVideo();
   }, [id, media_type, user?.accessToken]);

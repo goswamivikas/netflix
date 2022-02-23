@@ -19,11 +19,13 @@ function List({ list, type }: { list: ListInterface; type?: string }) {
       if (direction === "left" && slideNumber > 0) {
         setSlideNumber(slideNumber - 1);
         listRef.current.style.transform = `translateX(calc(${distance}px + 80vw))`;
+        listRef.current.style.zIndex = "10";
       }
       if (direction === "right") {
         setSlideNumber(slideNumber + 1);
         setIsMoved(true);
         listRef.current.style.transform = `translateX(calc(${distance}px - 80vw))`;
+        listRef.current.style.zIndex = "10";
       }
     }
   };
@@ -43,11 +45,13 @@ function List({ list, type }: { list: ListInterface; type?: string }) {
         )}
         <div
           ref={listRef}
-          className="containerss xsm:auto-cols-[33.333%] grid w-full auto-cols-[50%] grid-flow-col transition-all duration-1000 ease-in-out md:auto-cols-[25%]  lg:auto-cols-[25%] xl:auto-cols-[20%] 2xl:auto-cols-[16.666%]"
+          className="list-wrapper  w-full transition-all duration-1000 ease-in-out"
         >
-          {list.content.map((item, index) => (
-            <ListItem index={index} _item={item} key={item?.id} type={type} />
-          ))}
+          <div className="containerss xsm:auto-cols-[33.333%] relative grid w-full auto-cols-[50%] grid-flow-col  md:auto-cols-[25%]  lg:auto-cols-[25%] xl:auto-cols-[20%] 2xl:auto-cols-[16.666%]">
+            {list.content.map((item, index) => (
+              <ListItem index={index} _item={item} key={item?.id} type={type} />
+            ))}
+          </div>
         </div>
         <ArrowForwardIosOutlined
           onClick={() => handleClick("right")}

@@ -29,7 +29,7 @@ export const Home = ({ media_type }: { media_type?: string }) => {
             genre,
           },
         });
-        console.log({ lists: response.data });
+        // console.log({ lists: response.data });
         setLists(response.data);
       } catch (error) {
         console.log(error);

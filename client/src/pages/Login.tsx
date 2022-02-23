@@ -2,8 +2,8 @@ import React, { SyntheticEvent } from "react";
 import axios from "axios";
 
 export const Login = ({ setUser }: { setUser: Function }) => {
-  const [email, setEmail] = React.useState<string>("");
-  const [password, setPassword] = React.useState<string>("");
+  // const [email, setEmail] = React.useState<string>("");
+  // const [password, setPassword] = React.useState<string>("");
 
   const emailRef = React.useRef<HTMLInputElement>(null);
   const passwordRef = React.useRef<HTMLInputElement>(null);

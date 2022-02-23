@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useContext } from "react";
 import { MovieItem } from "./MovieItem";
 import { Link } from "react-router-dom";
-import Preview, { useVideo } from "./Preview";
+import { useVideo } from "./Preview";
 import { UserContext } from "../utils/UserContext";
 
 export default function Featured({ media_type }: { media_type?: string }) {
@@ -21,10 +21,10 @@ export default function Featured({ media_type }: { media_type?: string }) {
             media_type,
           },
         });
-        console.log({ getRandomItem: res.data });
+        // console.log({ getRandomItem: res.data });
         setItem(res.data);
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     };
     getRandomItem();
@@ -32,8 +32,6 @@ export default function Featured({ media_type }: { media_type?: string }) {
 
   const baseUrl: string = "https://image.tmdb.org/t/p/original";
   const bgPoster: string = `${baseUrl + item?.backdrop_path}`;
-
-  console.log({ bgPoster });
 
   return (
     <div className="featured relative h-[56.25vw] w-full">

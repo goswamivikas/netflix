@@ -7,9 +7,7 @@ import {
 } from "@material-ui/icons";
 import axios from "axios";
 import { MovieItem } from "./MovieItem";
-import { TvItem } from "./TvItem";
 import Preview from "./Preview";
-import { Divider } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import moviePosterFallback from "./moviePosterFallback.jpeg";
 import { UserContext } from "../utils/UserContext";
@@ -48,11 +46,9 @@ function ListItem({
     getItem();
   }, [id, media_type, user?.accessToken]);
   let timer: ReturnType<typeof setTimeout>;
-  let scale: string = "";
+
   const handleMouseEnter = (e: SyntheticEvent) => {
     e.preventDefault();
-    let listItem: HTMLElement = e.target as HTMLElement;
-
     timer = setTimeout(function () {
       setIsHovered(true);
     }, 200);
@@ -60,12 +56,11 @@ function ListItem({
 
   const handleMouseLeave = (e: SyntheticEvent) => {
     e.preventDefault();
-    let listItem: HTMLElement = e.target as HTMLElement;
-    listItem.style.transform = "";
+    // let listItem: HTMLElement = e.target as HTMLElement;
     clearTimeout(timer);
     setIsHovered(false);
   };
-  console.log({ isHovered });
+  // console.log({ isHovered });
   return (
     <div className="relative w-full overflow-visible px-[0.2vw] pt-[56.25%]">
       <Link to={{ pathname: "/watch", search: `id=${id}&type=${type}` }}>

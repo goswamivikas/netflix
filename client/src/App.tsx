@@ -14,7 +14,7 @@ import {
 
 function App() {
   const { user, setUser } = useUserAuth();
-  console.log({ appuser: user });
+  // console.log({ appuser: user });
   return (
     <UserContext.Provider value={{ user, setUser }}>
       <Router>

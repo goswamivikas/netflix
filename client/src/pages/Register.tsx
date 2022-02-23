@@ -5,8 +5,8 @@ import { UserContext } from "../utils/UserContext";
 
 export const Register: React.FC = () => {
   const [email, setEmail] = React.useState<string>("");
-  const [password, setPassword] = React.useState<string>("");
-  const { user, setUser } = React.useContext(UserContext);
+  // const [password, setPassword] = React.useState<string>("");
+  const { setUser } = React.useContext(UserContext);
 
   const emailRef = React.useRef<HTMLInputElement>(null);
   const passwordRef = React.useRef<HTMLInputElement>(null);
@@ -23,7 +23,7 @@ export const Register: React.FC = () => {
         email: email,
         password: passwordRef?.current?.value,
       });
-      console.log({ reguser: res.data });
+      // console.log({ reguser: res.data });
       setUser(res.data);
     } catch (err) {
       console.log(err);
