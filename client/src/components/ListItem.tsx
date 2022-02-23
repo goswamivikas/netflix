@@ -30,7 +30,7 @@ function ListItem({
   React.useEffect(() => {
     const getItem = async () => {
       try {
-        const res = await axios.get("/media/" + id, {
+        const res = await axios.get("api/media/" + id, {
           headers: {
             token: `Bearer ${user?.accessToken}`,
           },

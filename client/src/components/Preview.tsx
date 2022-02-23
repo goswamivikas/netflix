@@ -41,7 +41,7 @@ export function useVideo({
   const { user } = React.useContext(UserContext);
   React.useEffect(() => {
     const getVideo = async () => {
-      const res = await axios.get(`/media/${id}/video`, {
+      const res = await axios.get(`api/media/${id}/video`, {
         headers: {
           token: `Bearer ${user?.accessToken}`,
         },

@@ -13,7 +13,7 @@ export default function Featured({ media_type }: { media_type?: string }) {
   React.useEffect(() => {
     const getRandomItem = async () => {
       try {
-        const res = await axios.get(`media/random`, {
+        const res = await axios.get(`api/media/random`, {
           headers: {
             token: `Bearer ${user?.accessToken}`,
           },

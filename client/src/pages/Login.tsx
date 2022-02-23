@@ -10,10 +10,6 @@ export const Login = ({ setUser }: { setUser: Function }) => {
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    console.log({
-      email: emailRef?.current?.value,
-      password: passwordRef?.current?.value,
-    });
     if (!emailRef?.current?.value) {
       alert("please provide an email or phone number!");
       return;
@@ -24,7 +20,7 @@ export const Login = ({ setUser }: { setUser: Function }) => {
     }
 
     const res = await axios.post(
-      "auth/login",
+      "api/auth/login",
       {
         email: emailRef?.current?.value,
         password: passwordRef?.current?.value,

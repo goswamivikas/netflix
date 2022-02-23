@@ -20,7 +20,7 @@ export const Home = ({ media_type }: { media_type?: string }) => {
   useEffect(() => {
     const getRandomLists = async () => {
       try {
-        const response = await axios.get("lists", {
+        const response = await axios.get("api/lists", {
           headers: {
             token: `Bearer ${user?.accessToken}`,
           },

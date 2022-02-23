@@ -3,6 +3,8 @@ const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
+const path = require("path");
+
 const authRoute = require("./routes/auth");
 const usersRoute = require("./routes/users");
 const mediaRoute = require("./routes/media");
@@ -38,7 +40,14 @@ app.use("/api/users", usersRoute);
 app.use("/api/media", mediaRoute);
 app.use("/api/lists", listsRoute);
 
+const clientBuild = path.join(__dirname, "..", "client", "build");
+logger.info("client folder", { clientBuild });
+app.use(express.static(clientBuild));
+app.get("*", (req, res) => {
+  res.sendFile("index.html", { root: clientBuild });
+});
+
 app.listen(process.env.PORT, () => {
   console.log(`server is running on ${process.env.PORT}`);
-  logger.info("server is running", process.env.PORT);
+  logger.info("server is running", { port: process.env.PORT });
 });

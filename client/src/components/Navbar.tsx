@@ -2,10 +2,12 @@ import { ArrowDropDown, Notifications, Search } from "@material-ui/icons";
 import React, { SyntheticEvent } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../utils/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = React.useState<boolean>(false);
   const { setUser } = React.useContext(UserContext);
+  const navigate = useNavigate();
   // console.log(window.pageYOffset);
   // console.log(isScrolled);
   window.onscroll = () => {
@@ -16,6 +18,7 @@ const Navbar = () => {
   const handleLogout = (e: SyntheticEvent) => {
     e.preventDefault();
     setUser(null);
+    navigate("/");
   };
 
   let gradient: string = isScrolled ? "bg-gradient-to-b from-black" : "";

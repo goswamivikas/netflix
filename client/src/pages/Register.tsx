@@ -19,7 +19,7 @@ export const Register: React.FC = () => {
     // setPassword(passwordRef?.current?.value || "");
     console.log("handle finsih");
     try {
-      const res = await axios.post("auth/register", {
+      const res = await axios.post("api/auth/register", {
         email: email,
         password: passwordRef?.current?.value,
       });

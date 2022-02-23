@@ -54,5 +54,5 @@
     "prettier": "^2.5.1",
     "prettier-plugin-tailwindcss": "^0.1.5"
   },
-  "proxy": "http://localhost:4000/api/"
+  "proxy": "http://localhost:4000/"
 }
