@@ -1,0 +1,22 @@
+{
+  "name": "netflix-clone",
+  "version": "1.0.0",
+  "description": "a netflix clone built with react+typescript, tailwindcss and nodejs",
+  "main": "",
+  "scripts": {
+    "start": "npm start --prefix server",
+    "client": "cd client && npm install && npm run build & cd ..",
+    "server": "cd server && npm install & cd ..",
+    "heroku-postbuild": "npm run client && npm sun server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vikasg21/netflix.git"
+  },
+  "author": "Vikas Goswami",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vikasg21/netflix/issues"
+  },
+  "homepage": "http://localhost:4000/"
+}
