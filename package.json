@@ -3,11 +3,15 @@
   "version": "1.0.0",
   "description": "a netflix clone built with react+typescript, tailwindcss and nodejs",
   "main": "",
+  "engines": {
+    "node": "14.x",
+    "npm": "7.x"
+  },
   "scripts": {
     "start": "npm start --prefix server",
-    "client": "cd client && npm install && npm run build & cd ..",
-    "server": "cd server && npm install & cd ..",
-    "heroku-postbuild": "npm run client && npm sun server"
+    "client": "cd client && npm install && npm run build && cd ..",
+    "server": "cd server && npm install && cd ..",
+    "heroku-postbuild": "npm run client && npm run server"
   },
   "repository": {
     "type": "git",
