@@ -32,61 +32,70 @@ export const Register: React.FC = () => {
 
   return (
     <div className=" register bg-netflix-background relative h-screen w-screen bg-cover text-white">
-      <div className="top relative z-[1] flex items-center justify-between py-5 px-12">
+      <div className="top mx-5 flex justify-between pt-7">
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
           alt=""
-          className="logo h-10 "
+          className="logo h-6 sm:h-8 sm:w-[108px]"
         />
         <Link to="/login">
           <button
             onClick={() => console.log("sign in clicked")}
-            className="loginButton semibold cursor-pointer rounded-sm border-none bg-[#E50914] py-1 px-4 text-base"
+            className="loginButton semibold cursor-pointer rounded-sm border-none bg-[#E50914]  px-2 py-0.5 text-base sm:px-5 sm:py-1.5"
           >
-            Sign IN
+            Sign In
           </button>
         </Link>
       </div>
-      <div className="containerrr absolute top-0 left-0 flex h-full w-full flex-col items-center justify-center text-center text-white">
-        <h1 className="text-[48px] ">
-          Unlimited movies, Tv
-          <br /> Shows, and more
-        </h1>
-        <h2 className="my-5 text-[28px]">Watch anywhere. Cancel Anytime</h2>
-        <p className="text-xl">
-          Ready to Watch? Enter your email to create or restart your membership.
-        </p>
-        {!email ? (
-          <div className="input mt-5 flex h-12 w-1/2 items-center justify-between bg-white ">
-            <input
-              type="email"
-              ref={emailRef}
-              placeholder="email address"
-              className="h-full flex-[9] border  px-2 text-black focus:border-indigo-500 focus:outline-none"
-            />
-            <button
-              onClick={handleStart}
-              className="registerButton h-full flex-[3] cursor-pointer border-none bg-[#E50914] text-xl text-white"
-            >
-              Get Started
-            </button>
-          </div>
-        ) : (
-          <form className="input mt-5 flex h-12 w-1/2 items-center justify-between bg-white">
-            <input
-              type="password"
-              ref={passwordRef}
-              placeholder="password"
-              className="h-full flex-[9] border px-2 text-black focus:border-indigo-500 focus:outline-none"
-            />
-            <button
-              onClick={handleFinish}
-              className="registerButton h-full flex-[3] cursor-pointer border-none bg-[#E50914] text-xl text-white"
-            >
-              Start
-            </button>
-          </form>
-        )}
+      <div className="story-card-wrapper relative mx-auto  py-12 px-[5%] text-center text-white sm:px-12 sm:py-16">
+        <div className="story-card xsm:py-8 relative mx-auto py-4 sm:py-20">
+          <h1 className="mx-auto max-w-[640px] text-3xl font-semibold leading-none sm:text-[50px]">
+            Unlimited movies, TV shows, and more
+          </h1>
+          <h2 className="my-4 mx-auto max-w-[640px] text-xl font-medium sm:text-2xl">
+            Watch anywhere. Cancel anytime.
+          </h2>
+
+          {!email ? (
+            <div className="email-wrapper mx-auto mt-2 flex  flex-col  items-center justify-center border-red-500">
+              <h3 className="line- xsm:px-10 mx-auto max-w-[640px] px-4 text-base font-normal sm:px-12 sm:text-[18px] ">
+                Ready to Watch? Enter your email to create or restart your
+                membership.
+              </h3>
+              <div className="email-form mx-auto mt-2 w-full sm:mx-10 sm:mt-4 lg:flex lg:w-[660px] lg:items-center lg:justify-center ">
+                <input
+                  type="email"
+                  ref={emailRef}
+                  placeholder="email address"
+                  className=" h-10 w-full max-w-[640px] rounded-sm px-2 text-black focus:border-indigo-500 focus:outline-none md:h-12 lg:w-auto lg:flex-grow "
+                />
+                <button
+                  onClick={handleStart}
+                  className="registerButton xsm:px-4 mx-auto mt-4 block cursor-pointer rounded-sm border-none bg-[#E50914] py-2 px-3 text-white md:h-12 lg:m-0 lg:w-3 lg:flex-grow"
+                >
+                  Get Started
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="email-wrapper mx-auto mt-2 flex  flex-col  items-center justify-center border-red-500">
+              <form className="email-form mx-auto mt-2 w-full sm:mx-10 sm:mt-4 lg:flex lg:w-[660px] lg:items-center lg:justify-center ">
+                <input
+                  type="password"
+                  ref={passwordRef}
+                  placeholder="password"
+                  className="h-10 w-full max-w-[640px] rounded-sm px-2 text-black focus:border-indigo-500 focus:outline-none md:h-12 lg:w-auto lg:flex-grow"
+                />
+                <button
+                  onClick={handleFinish}
+                  className="registerButton xsm:px-4 mx-auto mt-4 block cursor-pointer rounded-sm border-none bg-[#E50914] py-2 px-3 text-white md:h-12 lg:m-0 lg:w-3 lg:flex-grow"
+                >
+                  Start
+                </button>
+              </form>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
