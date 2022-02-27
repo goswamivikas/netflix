@@ -9,7 +9,7 @@ import axios from "axios";
 import { MovieItem } from "./MovieItem";
 import Preview from "./Preview";
 import { Link } from "react-router-dom";
-import moviePosterFallback from "./moviePosterFallback.jpeg";
+import moviePosterFallback from "../assets/moviePosterFallback.jpeg";
 import { UserContext } from "../utils/UserContext";
 
 function ListItem({
@@ -76,7 +76,7 @@ function ListItem({
             title={item?.title ? item?.title : "Movie Poster"}
             onError={({ currentTarget }) => {
               currentTarget.onerror = null;
-              currentTarget.src = moviePosterFallback;
+              currentTarget.src = "/assets/moviePosterFallback.jpeg";
             }}
           />
           {isHovered && (

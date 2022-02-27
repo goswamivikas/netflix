@@ -7,3 +7,15 @@
     @apply h-full w-12;
   }
 }
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px rgb(51, 51, 51) inset !important;
+  -webkit-text-fill-color: white;
+  font-size: 18px;
+}
+input:-webkit-autofill::first-line {
+  font-size: 18px;
+}

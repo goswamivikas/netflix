@@ -9,7 +9,7 @@ module.exports = {
       },
       backgroundImage: {
         "netflix-background":
-          "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%), url('https://cdn.hipwallpaper.com/i/98/21/dUyCkp.jpg')",
+          "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%), url('./assets/netflix-bg.jpg')",
       },
     },
     screens: {
@@ -17,5 +17,5 @@ module.exports = {
       ...defaultTheme.screens,
     },
   },
-  plugins: [require("tailwindcss-children")],
+  plugins: [require("tailwindcss-children"), require("@tailwindcss/forms")],
 };

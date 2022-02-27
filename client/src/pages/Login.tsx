@@ -1,5 +1,6 @@
 import React, { SyntheticEvent } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export const Login = ({ setUser }: { setUser: Function }) => {
   // const [email, setEmail] = React.useState<string>("");
@@ -36,20 +37,21 @@ export const Login = ({ setUser }: { setUser: Function }) => {
   };
 
   return (
-    <div className="login bg-netflix-background relative h-screen w-screen bg-cover text-white">
-      <div className="top flex items-center justify-between py-5 px-12">
+    <div className="login md:bg-netflix-background relative min-h-screen overflow-hidden bg-black bg-cover text-white">
+      <div className="top flex items-center justify-between px-[4%] pt-4 pb-5">
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
           alt=""
-          className="logo h-10 "
+          className="logo h-12 md:h-10 "
         />
       </div>
-      <div className="containerrr absolute top-0 left-0 flex h-full w-full flex-col items-center justify-center text-center text-white">
+      <div className="containerrr mx-auto h-full w-full flex-col px-8 text-center text-white">
         <form
+          autoComplete="off"
           onSubmit={handleSubmit}
-          className="flex h-[660px] w-[450px] flex-col justify-around  rounded bg-[rgba(0,0,0,.75)] py-16 px-16"
+          className="mx-auto flex h-[660px] flex-col gap-10  rounded  bg-[rgba(0,0,0,.75)] md:w-[450px] md:py-16 md:px-16"
         >
-          <h1 className="align self-start text-3xl font-bold ">Sign In</h1>
+          <h1 className="align self-start text-4xl font-bold ">Sign In</h1>
           <input
             type="email"
             placeholder="Email or Phone number"
@@ -60,6 +62,7 @@ export const Login = ({ setUser }: { setUser: Function }) => {
           <input
             type="password"
             placeholder="Password"
+            autoComplete="off"
             ref={passwordRef}
             className="h-12 rounded bg-[rgb(51,51,51)] px-5 py-4 placeholder:text-gray-400"
           />
@@ -69,12 +72,15 @@ export const Login = ({ setUser }: { setUser: Function }) => {
           >
             Sign In
           </button>
-          <span className="text-gray-400">
-            New to Netflix? <b className="text-white">Sign up now.</b>
+          <span className="self-start text-[#8c8c8c] ">
+            New to Netflix?{" "}
+            <Link to="/register">
+              <span className="text-white">Sign up now.</span>
+            </Link>
           </span>
-          <small>
+          <small className="max-w-xs self-start text-left text-[#8c8c8c]">
             This page is protected by Google reCAPTCHA to ensure you're not a
-            bot. <b>Learn more</b>
+            bot. <span className="text-blue-700">Learn more.</span>
           </small>
         </form>
       </div>
