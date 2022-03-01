@@ -6,6 +6,7 @@ This is minimal replication of the Netflix web application, made for learning pu
 
 ### Features
 
+- Responsive design
 - Authentication
 - Latest information on Series and Movie Titles
 - Previews on Web
