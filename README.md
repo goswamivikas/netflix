@@ -4,6 +4,14 @@ This is minimal replication of the Netflix web application, made for learning pu
 
 ##### live url - http://netflix-21.herokuapp.com
 
+### Features
+
+- Authentication
+- Latest information on Series and Movie Titles
+- Previews on Web
+- No dummy data
+- All the lists, like Trending, Movies/Series in a genre are created dynamically on each data sync with TMDB Org. _server/utils/scheduler/tmdbSync.js_
+
 ### Tech stack
 
 - #### Client
